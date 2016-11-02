@@ -1,0 +1,15 @@
+﻿{
+    "Name":"Test",
+    "SpriteAnimation":{
+        "Symbol":"M",
+        "Foreground":"Color.Blue",
+        "Background":"Color.Black"
+    },
+    "Actor":{
+        "Health":"100",
+        "MaxHealth":"100",
+        "Energy":"75",
+        "MaxEnergy":"75",
+        "IsInFov":"false"
+   }
+}

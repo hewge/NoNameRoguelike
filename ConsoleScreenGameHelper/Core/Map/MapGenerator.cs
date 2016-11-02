@@ -1,0 +1,66 @@
+﻿using System;
+using System.Collections.Generic;
+using ConsoleScreenGameHelper.Core.Entity;
+using ConsoleScreenGameHelper.Core.Entity.Components;
+using SadConsole.Consoles;
+using Point = Microsoft.Xna.Framework.Point;
+using RogueSharp;
+using RogueSharp.MapCreation;
+using ConsoleScreenGameHelper.Core.Map.MapObjects;
+
+namespace ConsoleScreenGameHelper.Core.Map
+{
+	public class MapGenerator<T> where T : RogueSharp.IMap
+	{
+        private readonly int width;
+        private readonly int height;
+
+		bool[,] collisionMap;
+
+        MapData dataMap;
+
+        public bool[,] CollisionMap { get{ return collisionMap; } set{ collisionMap = value; } }
+
+        private readonly IMapCreationStrategy<T> mapCreationStrategy;
+
+		public MapGenerator(int width, int height, IMapCreationStrategy<T> mapCreationStrategy, ITextSurfaceRendered textSurface)
+		{
+            this.width = width;
+            this.height = height;
+            this.mapCreationStrategy = mapCreationStrategy;
+
+            dataMap = new MapData(width, height, textSurface);
+		}
+
+        public MapData CreateMap()
+        {
+            dataMap.Map = mapCreationStrategy.CreateMap();
+            dataMap.FieldOfView = new RogueSharp.FieldOfView(dataMap.Map);
+            collisionMap = new bool[width, height];
+
+            foreach(var cell in dataMap.Map.GetAllCells())
+            {
+                if(cell.IsWalkable)
+                {
+					dataMap[cell.X, cell.Y] = new Floor();
+                    dataMap[cell.X, cell.Y].RenderToCell(dataMap.textSurface[cell.X, cell.Y], false, false);
+                    collisionMap[cell.X, cell.Y] = true;
+                }
+                else
+                {
+                    dataMap.Map.SetCellProperties(cell.X, cell.Y, false, false);
+                    dataMap[cell.X, cell.Y] = new Wall();
+                    dataMap[cell.X, cell.Y].RenderToCell(dataMap.textSurface[cell.X, cell.Y], false, false);
+                    collisionMap[cell.X, cell.Y] = false;
+
+                    dataMap.Map.SetCellProperties(cell.X, cell.Y, false, cell.IsWalkable);
+                }
+            }
+
+            //FIXME: Vad skall göras med detta??
+            MoveInfo.CollisionMap = collisionMap;
+            return dataMap;
+        }
+	}
+}
+

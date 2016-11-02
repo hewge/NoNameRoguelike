@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{E7A4B76B-9971-46BE-A440-0582F586DC72}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>NoNameRoguelike</RootNamespace>
+    <AssemblyName>NoNameRoguelike</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <StartupObject>NoNameRoguelike.Program</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Reference Include="MonoGame.Framework">
+      <HintPath>..\packages\MonoGame.Framework.DesktopGL.3.5.1.1679\lib\net40\MonoGame.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="NVorbis">
+      <HintPath>..\packages\MonoGame.Framework.DesktopGL.3.5.1.1679\lib\net40\NVorbis.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK">
+      <HintPath>..\packages\MonoGame.Framework.DesktopGL.3.5.1.1679\lib\net40\OpenTK.dll</HintPath>
+    </Reference>
+    <Reference Include="RogueSharp">
+      <HintPath>..\packages\RogueSharp.3.0.0\lib\portable-net40+sl50+win+wpa81+wp80\RogueSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="SadConsole.GameHelpers.OpenGL">
+      <HintPath>..\packages\SadConsole.GameHelpers.MonoGameGL.4.3.0\lib\net45\SadConsole.GameHelpers.OpenGL.dll</HintPath>
+    </Reference>
+    <Reference Include="SadConsole.Core.OpenGL">
+      <HintPath>..\packages\SadConsole.Core.MonoGameGL.5.0.7\lib\net45\SadConsole.Core.OpenGL.dll</HintPath>
+    </Reference>
+    <Reference Include="SadConsole.Controls.OpenGL">
+      <HintPath>..\packages\SadConsole.Controls.MonoGameGL.3.1.1\lib\net45\SadConsole.Controls.OpenGL.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Content\Font\C64.font">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Font\Cheepicus_12x12.png" />
+    <None Include="Content\Font\Cheepicus12.font" />
+    <None Include="Content\Font\IBM.font" />
+    <None Include="Content\Font\IBM8x16.png" />
+    <None Include="Content\Font\Yayo_c64.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Splash\nn.xp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="C64.font" />
+    <None Include="Cheepicus12.font" />
+    <None Include="IBM.font" />
+    <None Include="Cheepicus_12x12.png" />
+    <None Include="IBM8x16.png" />
+    <None Include="Yayo_c64.png" />
+    <None Include="World\Entity\Blueprint\test.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ConsoleScreenGameHelper\ConsoleScreenGameHelper.csproj">
+      <Project>{973D234C-ADB9-40F6-B6BF-3DFDD8F7FA5A}</Project>
+      <Name>ConsoleScreenGameHelper</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Content\" />
+    <Folder Include="Content\Font\" />
+    <Folder Include="Core\" />
+    <Folder Include="Core\Console\" />
+    <Folder Include="Core\Screen\" />
+    <Folder Include="Content\Splash\" />
+    <Folder Include="Core\Systems\" />
+    <Folder Include="World\" />
+    <Folder Include="World\Entity\" />
+    <Folder Include="World\Entity\Blueprint\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="Core\Screen\TitleScreen.cs" />
+    <Compile Include="Core\Console\CharacterStatusPanel.cs" />
+    <Compile Include="Core\Console\MessageConsole.cs" />
+    <Compile Include="Core\Screen\DungeonScreen.cs" />
+    <Compile Include="Core\Console\DungeonViewConsole.cs" />
+    <Compile Include="GameWorld.cs" />
+    <Compile Include="Core\Systems\MessageLog.cs" />
+  </ItemGroup>
+</Project>
