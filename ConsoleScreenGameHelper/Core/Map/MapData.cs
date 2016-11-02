@@ -46,14 +46,14 @@ namespace ConsoleScreenGameHelper.Core.Map
             var FOV = be.GetComponent<FOV>(ComponentType.FOV);
             if(FOV != null)
             {
-                var SA = be.GetComponent<SpriteAnimation>(ComponentType.SpriteAnimation);
-                if(SA != null)
+                var A = be.GetComponent<Actor>(ComponentType.Actor);
+                if(A != null)
                 {
                     foreach(var cell in previousFOV)
                     {
                         this[cell.X, cell.Y].RemoveCellFromView(textSurface[cell.X, cell.Y]);
                     }
-                    previousFOV = fieldOfView.ComputeFov(SA.Position.X, SA.Position.Y, 10, true);
+                    previousFOV = fieldOfView.ComputeFov(A.Sprite.Position.X, A.Sprite.Position.Y, A.Stats.Awareness, true);
                     foreach(var cell in previousFOV)
                     {
                         Map.SetCellProperties(cell.X, cell.Y, cell.IsTransparent, cell.IsWalkable, true);

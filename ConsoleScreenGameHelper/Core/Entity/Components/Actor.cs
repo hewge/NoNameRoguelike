@@ -19,38 +19,36 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
         //These are just here to get scope outside of the constructor to be able to construct Stats and Sprite components in the Initialize.
         Color foreground;
         Color background;
-        int health;
-        int maxHealth;
-        int energy;
-        int maxEnergy;
+        int strenght;
+        int speed;
+        int intelligence;
         int symbol;
 
-		public Actor() : this(Color.Blue, Color.Black, null, 100, 100, 100, 100, '%')
+		public Actor() : this(Color.Blue, Color.Black, null, 8, 8, 8,  '%')
 		{
 			
 		}
 
-        public Actor(MapLevel map) : this(Color.Blue, Color.Black, map, 100, 100, 100, 100, '%')
+        public Actor(MapLevel map) : this(Color.Blue, Color.Black, map, 8, 8, 8, '%')
         {
 
         }
 
-		public Actor(Color foreground, Color background, MapLevel map, int health = 100, int maxHealth = 100, int energy = 100, int maxEnergy = 100, int symbol = '%')
+		public Actor(Color foreground, Color background, MapLevel map, int str, int spd, int inte, int symbol = '%')
 		{
             //KAN EJ LÄGGA TILL KOMPONENTER I EN ANNAN KOMPONENTS CONSTRUCTOR.
             this.Map = map;
             this.foreground = foreground;
             this.background = background;
-            this.health = health;
-            this.maxHealth = maxHealth;
-            this.energy = energy;
-            this.maxEnergy = maxEnergy;
+            this.intelligence = inte;
+            this.strenght = str;
+            this.speed = spd;
             this.symbol = symbol;
 		}
 
         public override void OnAfterInitialize()
         {
-            this.GetParent().AddComponent(new Statistic(health, maxHealth, energy, maxEnergy));
+            this.GetParent().AddComponent(new Statistic(strenght, speed, intelligence));
             this.GetParent().AddComponent(new SpriteAnimation(symbol, foreground, background));
             Stats = this.GetComponent<Statistic>(ComponentType.Stats);
             Sprite = this.GetComponent<SpriteAnimation>(ComponentType.SpriteAnimation);
