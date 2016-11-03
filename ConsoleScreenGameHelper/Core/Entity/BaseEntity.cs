@@ -13,7 +13,6 @@ namespace ConsoleScreenGameHelper.Core.Entity
         public Guid ID { get; set; }
         public string NAME = "NoName";
         public ILog logger = null;
-        public bool alive = true;
         [JsonProperty]
         private readonly List<Component> _components;
 
@@ -68,14 +67,6 @@ namespace ConsoleScreenGameHelper.Core.Entity
 
             _components.Remove(component);
         }
-        public void Die()
-        {
-            alive = false;
-            if(logger != null)
-            {
-                logger.Debug(string.Format("{0}, Died.", this.NAME));
-            }
-        }
 
         public void FireEvent(object sender, EventArgs e)
         {
@@ -91,16 +82,6 @@ namespace ConsoleScreenGameHelper.Core.Entity
         }
         public void Update()
         {
-            if(!alive)
-            {
-                var a = GetComponent<Actor>(ComponentType.Actor);
-                if(a != null)
-                {
-                   a.Map.MapData.Map.SetCellProperties(a.Sprite.Position.X, a.Sprite.Position.Y, true, true);
-                }
- 
-                _components.RemoveAll(_ => true);
-            }
             foreach(var component in _components)
             {
                 component.Update();
@@ -116,7 +97,7 @@ namespace ConsoleScreenGameHelper.Core.Entity
         }
         public override string ToString()
         {
-            return string.Format("NAME:{0}, ID:{1}, logger:{2}, alive:{3}, _components:{4}", this.NAME, this.ID, this.logger, this.alive, this._components);
+            return string.Format("NAME:{0}, ID:{1}, logger:{2}, _components:{3}", this.NAME, this.ID, this.logger, this._components);
         }
 	}
 }

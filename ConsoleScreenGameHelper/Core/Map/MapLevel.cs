@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using SadConsole.Consoles;
 using RogueSharp.MapCreation;
 using ConsoleScreenGameHelper.Core.Entity;
@@ -27,6 +28,11 @@ namespace ConsoleScreenGameHelper.Core.Map
 
 		}
 
+        public BaseEntity GetEntityAt(int x, int y)
+        {
+            return EntityContainer.FirstOrDefault(e => e.GetComponent<Actor>(ComponentType.Actor).Sprite.Position.X == x && e.GetComponent<Actor>(ComponentType.Actor).Sprite.Position.Y == y);
+        }
+
         public void Update()
         {
             EntityContainer.Update();
@@ -36,15 +42,12 @@ namespace ConsoleScreenGameHelper.Core.Map
         {
             foreach(var be in EntityContainer)
             {
-                if(be.alive)
+                var sa = be.GetComponent<SpriteAnimation>(ComponentType.SpriteAnimation);
+                if(MapData.FieldOfView.IsInFov(sa.Position.X, sa.Position.Y))
                 {
-                    var sa = be.GetComponent<SpriteAnimation>(ComponentType.SpriteAnimation);
-                    if(MapData.FieldOfView.IsInFov(sa.Position.X, sa.Position.Y))
-                    {
-                        be.Render();
-                    }
-
+                    be.Render();
                 }
+
             }
         }
 	}

@@ -1,4 +1,5 @@
 ﻿using System;
+using RogueSharp.DiceNotation;
 using ConsoleScreenGameHelper.EventHandler;
 using ConsoleScreenGameHelper.Core.Entity;
 
@@ -8,28 +9,49 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
 	{
 
         public override ComponentType ComponentType { get { return ComponentType.Attack; } }
-        public int BaseDamage { get; set; }
+        public Statistic Stats { get{ return this.GetComponent<Actor>(ComponentType.Actor).Stats; }  }
 		public Attack ()
 		{
-            BaseDamage = 1;
 		}
+
+        private float ResolveAttack()
+        {
+            float hitPercent = 0;
+            DiceExpression attackDice = new DiceExpression().Dice(Stats.Attack, 100);
+            DiceResult attackResult = attackDice.Roll();
+
+            foreach( TermResult termResult in attackResult.Results )
+            {
+                if(termResult.Value >= (100 - Stats.AttackChance ))
+                {
+                    hitPercent++;
+                }
+            }
+
+            var hp = hitPercent/(float)Stats.Attack;
+
+            System.Console.WriteLine("HitPercent:{0}", hp);
+
+            return hp;
+        }
 
         public override void FireEvent(object sender, EventArgs e)
         {
             if(e.GetType() == typeof(NewAttackEventArgs))
             {
-                (e as NewAttackEventArgs).Damage = BaseDamage;
+                var hitPercent = ResolveAttack();
+                var dmg = Stats.Attack * hitPercent;
+
+                System.Console.WriteLine("Damage:{0}", (int)dmg);
+                (e as NewAttackEventArgs).Damage = (int)dmg;
+
+                //TODO: Modify Damage Here ?
+
                 var self_a = GetComponent<Actor>(ComponentType.Actor);
-                foreach(var en in self_a.Map.EntityContainer)
+                BaseEntity other = self_a.Map.GetEntityAt((e as NewAttackEventArgs).Position.X, (e as NewAttackEventArgs).Position.Y);
+                if(other != null)
                 {
-                    var other_a = en.GetComponent<Actor>(ComponentType.Actor);
-                    if(other_a != null)
-                    {
-                        if(other_a.Sprite.Position == (e as NewAttackEventArgs).Position)
-                        {
-                            en.FireEvent(this, new NewDamageEventArgs((e as NewAttackEventArgs).Damage));
-                        }
-                    }
+                    other.FireEvent(this, new NewDamageEventArgs((e as NewAttackEventArgs).Damage));
                 }
             }
         }

@@ -41,7 +41,6 @@ namespace NoNameRoguelike.Core.Console
             playerEntity.NAME = "Player";
             playerEntity.AddComponent(new PlayerInput());
 			playerEntity.AddComponent(new Actor(Color.Orange, Color.Black, mapLevel, 10, 10, 10,  '@'));
-            playerEntity.AddComponent(new Attack());
             playerEntity.AddComponent(new ViewPort(viewWidth, viewHeight, mapWidth, mapHeight));
             playerEntity.AddComponent(new FOV());
             CameraFollow = playerEntity;

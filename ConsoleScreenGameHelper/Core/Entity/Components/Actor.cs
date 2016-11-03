@@ -50,6 +50,8 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
         {
             this.GetParent().AddComponent(new Statistic(strenght, speed, intelligence));
             this.GetParent().AddComponent(new SpriteAnimation(symbol, foreground, background));
+            this.GetParent().AddComponent(new Attack());
+            this.GetParent().AddComponent(new Defence());
             Stats = this.GetComponent<Statistic>(ComponentType.Stats);
             Sprite = this.GetComponent<SpriteAnimation>(ComponentType.SpriteAnimation);
 
@@ -57,26 +59,15 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
 
         public override void FireEvent(object sender, EventArgs e)
         {
-            if(e.GetType() == typeof(NewDamageEventArgs))
-            {
-                //Take Damage , by first finding out if any "components" want to modify it first.
-                TakeDamage((e as NewDamageEventArgs).Damage);
-
-            }
         }
-
-        private void TakeDamage(int damage)
+        public void Die()
         {
-            Stats.Health -= damage;
-            if(Stats.Health <= 0)
+            if(GetParent().logger != null)
             {
-                Die();
+                GetParent().logger.Debug(string.Format("{0}, Has Died.", GetParent().NAME));
             }
-        }
-
-        private void Die()
-        {
-            GetParent().Die();
+            Map.MapData.Map.SetCellProperties(Sprite.Position.X, Sprite.Position.Y, true, true);
+            Map.EntityContainer.Remove(GetParent());
         }
 	}
 }

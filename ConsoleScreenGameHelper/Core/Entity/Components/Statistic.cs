@@ -108,6 +108,11 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
 
         private void StatusChanged()
         {
+            if(Health <= 0)
+            {
+                var a = GetComponent<Actor>(ComponentType.Actor);
+                a.Die();
+            }
             if(statsChanged != null)
             {
                 statsChanged(this, new StatsChangedEventArgs(Health, MaxHealth, Energy, MaxEnergy, IsInFov));

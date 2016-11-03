@@ -11,7 +11,8 @@ namespace ConsoleScreenGameHelper.Core.Entity
         ViewPort,
         Actor,
         Attack,
-        Stats
+        Stats,
+        Defence
 	}
 }
 
