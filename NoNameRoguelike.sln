@@ -152,5 +152,11 @@ Global
 		$24.NamingStyle = PascalCase
 		$24.IncludeInstanceMembers = True
 		$24.IncludeStaticEntities = True
+		$0.TextStylePolicy = $26
+		$26.inheritsSet = null
+		$26.scope = application/config+xml
+		$0.XmlFormattingPolicy = $27
+		$27.inheritsSet = null
+		$27.scope = application/config+xml
 	EndGlobalSection
 EndGlobal

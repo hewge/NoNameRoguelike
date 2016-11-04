@@ -107,6 +107,8 @@
     <Compile Include="Core\Map\MapObjects\MapObjectBase.cs" />
     <Compile Include="Core\Map\MapObjects\Wall.cs" />
     <Compile Include="Core\Entity\Components\Defence.cs" />
+    <Compile Include="Interface\IScheduleable.cs" />
+    <Compile Include="Manager\ScheduleManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

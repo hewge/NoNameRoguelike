@@ -1,4 +1,5 @@
 ﻿using System;
+using ConsoleScreenGameHelper.Interface;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using ConsoleScreenGameHelper.EventHandler;
@@ -7,8 +8,9 @@ using ConsoleScreenGameHelper.Core.Map;
 
 namespace ConsoleScreenGameHelper.Core.Entity.Components
 {
-	public class Actor : Component
+	public class Actor : Component, IScheduleable
 	{
+        public int Time { get; set; }
         [JsonIgnore]
         public Statistic Stats { get; set; }
         [JsonIgnore]
