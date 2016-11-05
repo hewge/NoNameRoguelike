@@ -6,9 +6,7 @@ namespace ConsoleScreenGameHelper.Core.Entity
 	{
         SpriteAnimation,
         PlayerInput,
-        MoveInfo,
         FOV,
-        ViewPort,
         Actor,
         Attack,
         Stats,

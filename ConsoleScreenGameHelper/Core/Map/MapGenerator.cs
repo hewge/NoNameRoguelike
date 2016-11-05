@@ -15,11 +15,8 @@ namespace ConsoleScreenGameHelper.Core.Map
         private readonly int width;
         private readonly int height;
 
-		bool[,] collisionMap;
 
         MapData dataMap;
-
-        public bool[,] CollisionMap { get{ return collisionMap; } set{ collisionMap = value; } }
 
         private readonly IMapCreationStrategy<T> mapCreationStrategy;
 
@@ -36,7 +33,6 @@ namespace ConsoleScreenGameHelper.Core.Map
         {
             dataMap.Map = mapCreationStrategy.CreateMap();
             dataMap.FieldOfView = new RogueSharp.FieldOfView(dataMap.Map);
-            collisionMap = new bool[width, height];
 
             foreach(var cell in dataMap.Map.GetAllCells())
             {
@@ -44,21 +40,17 @@ namespace ConsoleScreenGameHelper.Core.Map
                 {
 					dataMap[cell.X, cell.Y] = new Floor();
                     dataMap[cell.X, cell.Y].RenderToCell(dataMap.textSurface[cell.X, cell.Y], false, false);
-                    collisionMap[cell.X, cell.Y] = true;
                 }
                 else
                 {
                     dataMap.Map.SetCellProperties(cell.X, cell.Y, false, false);
                     dataMap[cell.X, cell.Y] = new Wall();
                     dataMap[cell.X, cell.Y].RenderToCell(dataMap.textSurface[cell.X, cell.Y], false, false);
-                    collisionMap[cell.X, cell.Y] = false;
 
                     dataMap.Map.SetCellProperties(cell.X, cell.Y, false, cell.IsWalkable);
                 }
             }
 
-            //FIXME: Vad skall göras med detta??
-            MoveInfo.CollisionMap = collisionMap;
             return dataMap;
         }
 	}

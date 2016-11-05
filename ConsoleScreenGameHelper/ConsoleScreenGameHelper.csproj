@@ -92,9 +92,7 @@
     <Compile Include="EventHandler\NewMoveEventArgs.cs" />
     <Compile Include="Enum\Direction.cs" />
     <Compile Include="Core\Entity\Components\SpriteAnimation.cs" />
-    <Compile Include="Core\Entity\Components\MoveInfo.cs" />
     <Compile Include="Core\Entity\Components\FOV.cs" />
-    <Compile Include="Core\Entity\Components\ViewPort.cs" />
     <Compile Include="Core\Entity\Components\Actor.cs" />
     <Compile Include="Core\Entity\Components\Attack.cs" />
     <Compile Include="EventHandler\NewAttackEventArgs.cs" />

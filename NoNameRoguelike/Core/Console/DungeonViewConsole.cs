@@ -37,7 +37,6 @@ namespace NoNameRoguelike.Core.Console
             playerEntity.NAME = "Player";
             playerEntity.AddComponent(new PlayerInput());
 			playerEntity.AddComponent(new Actor(Color.Orange, Color.Black, mapLevel, 10, 10, 10,  '@'));
-            playerEntity.AddComponent(new ViewPort(viewWidth, viewHeight, mapWidth, mapHeight));
             playerEntity.AddComponent(new FOV());
             mapLevel.CameraFollow = playerEntity;
 
@@ -45,8 +44,6 @@ namespace NoNameRoguelike.Core.Console
             testMob.AddComponent(new Actor(mapLevel));
             mapLevel.EntityContainer.Add(testMob);
             mapLevel.EntityContainer.Add(playerEntity);
-            //TODO: Maybe make an 'EntityList' Class that MoveInfo can have ersponibility for, or is updated in MoveInfo.
-            MoveInfo.Entities = mapLevel.EntityContainer;
 
             testMob.GetComponent<SpriteAnimation>(ComponentType.SpriteAnimation).Position = mapLevel.MapData.GetWalkablePosition();
             playerEntity.GetComponent<SpriteAnimation>(ComponentType.SpriteAnimation).Position = mapLevel.MapData.GetWalkablePosition();
