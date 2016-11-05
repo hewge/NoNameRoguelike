@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Linq;
 using SadConsole.Consoles;
 using RogueSharp.MapCreation;
@@ -14,8 +15,16 @@ namespace ConsoleScreenGameHelper.Core.Map
         public MapData MapData { get; set; }
         public EntityContainer EntityContainer { get; set; }
 
+        public readonly int Width;
+        public readonly int Height;
+
+        private Stack cameraFollow = new Stack();
+        public BaseEntity CameraFollow { get{ return (BaseEntity)cameraFollow.Peek(); } set{ cameraFollow.Push(value); } }
+
 		public MapLevel(int width, int height, IMapCreationStrategy<RogueSharp.Map> mapCreationStrategy, ITextSurfaceRendered textSurface)
 		{
+            Width = width;
+            Height = height;
             //All this for the generic type argument.
             Type[] typeArgs = mapCreationStrategy.GetType().GetGenericArguments();
             Type genericMapGen = typeof(MapGenerator<>);
@@ -35,6 +44,11 @@ namespace ConsoleScreenGameHelper.Core.Map
 
         public void Update()
         {
+            if(CameraFollow != null)
+            {
+                MapData.ComputeFOV(CameraFollow);
+            }
+
             EntityContainer.Update();
         }
 
@@ -45,9 +59,14 @@ namespace ConsoleScreenGameHelper.Core.Map
                 var sa = be.GetComponent<SpriteAnimation>(ComponentType.SpriteAnimation);
                 if(MapData.FieldOfView.IsInFov(sa.Position.X, sa.Position.Y))
                 {
+                    //TODO: fix in fov code. true/or false does not matter, just makes the status panel redraw.
+                    be.GetComponent<Statistic>(ComponentType.Stats).IsInFov = true;
                     be.Render();
                 }
-
+                else
+                {
+                    be.GetComponent<Statistic>(ComponentType.Stats).IsInFov = false;
+                }
             }
         }
 	}

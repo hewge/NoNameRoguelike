@@ -1,6 +1,7 @@
 ﻿using System;
 using ConsoleScreenGameHelper.Interface;
 using ConsoleScreenGameHelper.Manager;
+using ConsoleScreenGameHelper.Core.Entity.Components;
 using System.Collections;
 using System.Collections.ObjectModel;
 
@@ -27,7 +28,7 @@ namespace ConsoleScreenGameHelper.Core.Entity
         public new void Remove(BaseEntity be)
         {
             base.Remove(be);
-            var a = GetComponent<Actor>(ComponentType.Actor);
+            var a = be.GetComponent<Actor>(ComponentType.Actor);
             if(a != null)
             {
                 ScheduleManager.Remove(a);
@@ -40,6 +41,7 @@ namespace ConsoleScreenGameHelper.Core.Entity
             {
                 be.Update();
             }
+
         }
 
         public void Render()

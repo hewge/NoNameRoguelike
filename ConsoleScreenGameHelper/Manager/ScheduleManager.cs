@@ -1,45 +1,48 @@
 ﻿using System;
-using ConsoleScreenGameHelper.Interface;
+using System.Linq;
 using System.Collections.Generic;
+using System.Collections;
+using ConsoleScreenGameHelper.Interface;
 
 namespace ConsoleScreenGameHelper.Manager
 {
 	public class ScheduleManager
 	{
         private int time;
-        private readonly SortedDictionary<int, List<IScheduleable>> scheduleables;
+        private readonly SortedList scheduleables;
 
 		public ScheduleManager ()
 		{
             time = 0;
-            scheduleables = new SortedDictionary<int, List<IScheduleable>>();
+            scheduleables = new SortedList();
 		}
 
         public void Add(IScheduleable scheduleable)
         {
-            int key = time + scheduleables.Time;
+            int key = time + scheduleable.Time;
             if(!scheduleables.ContainsKey(key))
             {
                 scheduleables.Add(key, new List<IScheduleable>());
             }
-            scheduleables[key].Add(scheduleable);
+            (scheduleables[key] as List<IScheduleable>).Add(scheduleable);
         }
 
         public void Remove(IScheduleable scheduleable)
         {
-            KeyValuePair<int, List<IScheduleable>> scheduleableListFound = new KeyValuePair<int, List<IScheduleable>>(-1, null);
-            foreach(var scheduleableList in scheduleables)
+
+            DictionaryEntry scheduleableListFound = new DictionaryEntry();
+            foreach(DictionaryEntry scheduleableList in scheduleables)
             {
-                if(scheduleableList.Value.Contains(scheduleable))
+                if(((scheduleableList).Value as List<IScheduleable>).Contains(scheduleable))
                 {
-                    scheduleableListFound = scheduleableList;
+                    scheduleableListFound = (DictionaryEntry)scheduleableList;
                     break;
                 }
             }
             if(scheduleableListFound.Value != null)
             {
-                scheduleableListFound.Value.Remove(scheduleable);
-                if(scheduleableListFound.Value.Count <= 0)
+                (scheduleableListFound.Value as List<IScheduleable>).Remove(scheduleable);
+                if((scheduleableListFound.Value as List<IScheduleable>).Count <= 0)
                 {
                     scheduleables.Remove(scheduleableListFound.Key);
                 }
@@ -48,10 +51,13 @@ namespace ConsoleScreenGameHelper.Manager
 
         public IScheduleable Get()
         {
-            var firstScheduleableGroup = scheduleables.First();
-            var firstScheduleable = firstScheduleableGroup.Value.First();
-            Remove(firstScheduleable);
-            time = firstScheduleableGroup.Key;
+            int firstKey = (int)scheduleables.GetKey(0);
+            List<IScheduleable> firstGroup = (List<IScheduleable>)scheduleables.GetByIndex(firstKey);
+            var firstScheduleable = firstGroup[0];
+            System.Console.WriteLine("firstKey:{0}, firstGroup:{1}, firstScheduleable:{2}", firstKey, firstGroup, firstScheduleable);
+            firstGroup.Remove(firstScheduleable);
+            time = firstKey;
+            this.Add(firstScheduleable);
             return firstScheduleable;
         }
 

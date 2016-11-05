@@ -34,7 +34,6 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
         private int _maxHealth;
         private int _energy;
         private int _maxEnergy;
-        private bool _isInFov;
 
 
         [JsonProperty]
@@ -64,7 +63,7 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
         public int Energy { get{ return _energy; } set{ _energy = value; StatusChanged(); } }
         [JsonProperty]
         public int MaxEnergy { get{ return _maxEnergy; } set{ _maxEnergy = value; StatusChanged(); } }
-        public bool IsInFov { get{ return _isInFov; } set{ _isInFov = value; StatusChanged(); } }
+        public bool IsInFov { get{ return GetComponent<Actor>(ComponentType.Actor).Map.MapData.FieldOfView.IsInFov(GetComponent<SpriteAnimation>(ComponentType.SpriteAnimation).Position.X, GetComponent<SpriteAnimation>(ComponentType.SpriteAnimation).Position.Y); } set{ StatusChanged(); }}
 
         [JsonProperty]
         private bool calculated = false;

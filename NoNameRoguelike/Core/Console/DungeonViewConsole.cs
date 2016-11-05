@@ -20,10 +20,6 @@ namespace NoNameRoguelike.Core.Console
         public MapLevel mapLevel;
         public BaseEntity Player { get { return playerEntity; } }
 
-        private Stack cameraFollow = new Stack();
-
-        public BaseEntity CameraFollow { get{ return (BaseEntity)cameraFollow.Peek(); } set{ cameraFollow.Push(value); } }
-
 		public DungeonViewConsole(int viewWidth, int viewHeight, int mapWidth, int mapHeight) : base(mapWidth, mapHeight)
 		{
             //FIXME: Had some success with <T> where T : IMap , now make it better. now we only need to know in the instansiating class which maptype to use.
@@ -43,7 +39,7 @@ namespace NoNameRoguelike.Core.Console
 			playerEntity.AddComponent(new Actor(Color.Orange, Color.Black, mapLevel, 10, 10, 10,  '@'));
             playerEntity.AddComponent(new ViewPort(viewWidth, viewHeight, mapWidth, mapHeight));
             playerEntity.AddComponent(new FOV());
-            CameraFollow = playerEntity;
+            mapLevel.CameraFollow = playerEntity;
 
             testMob = new BaseEntity(GameWorld.MessageLog);
             testMob.AddComponent(new Actor(mapLevel));
@@ -63,17 +59,6 @@ namespace NoNameRoguelike.Core.Console
 
         public override void Update()
         {
-            if(CameraFollow != null)
-            {
-                mapLevel.MapData.ComputeFOV(CameraFollow);
-            }
-
-            var ViewPort = playerEntity.GetComponent<ViewPort>(ComponentType.ViewPort);
-            if(ViewPort != null)
-            {
-                this.Position = ViewPort.Position;
-                this.TextSurface.RenderArea = ViewPort.RenderArea;
-            }
             base.Update();
             mapLevel.Update();
         }
@@ -82,35 +67,6 @@ namespace NoNameRoguelike.Core.Console
         {
             base.Render();
             mapLevel.Render();
-            foreach(var e in mapLevel.EntityContainer)
-            {
-                var sa = e.GetComponent<SpriteAnimation>(ComponentType.SpriteAnimation);
-                if(sa != null)
-                {
-                    if(mapLevel.MapData.FieldOfView.IsInFov(sa.Position.X, sa.Position.Y))
-                    {
-                        var a = e.GetComponent<Actor>(ComponentType.Actor);
-                        if(a != null)
-                        {
-                            if(a.Stats.IsInFov != true)
-                            {
-                                a.Stats.IsInFov = true;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        var a = e.GetComponent<Actor>(ComponentType.Actor);
-                        if(a != null)
-                        {
-                            if(a.Stats.IsInFov != false)
-                            {
-                                a.Stats.IsInFov = false;
-                            }
-                        }
-                    }
-                }
-            }
         }
 	}
 }

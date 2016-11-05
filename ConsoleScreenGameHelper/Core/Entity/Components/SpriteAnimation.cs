@@ -64,53 +64,55 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
             }
         }
 
-        private void AlignViewPort(ViewPort vp)
+        private void AlignViewPort()
         {
-                var area = new Rectangle(this.Position.X - (vp.RenderArea.Width / 2),
-                        this.Position.Y - (vp.RenderArea.Height / 2),
-                        vp.RenderArea.Width, vp.RenderArea.Height);
-                if (area.Width > vp.MapWidth)
-                    area.Width = vp.MapWidth;
-                if (area.Height > vp.MapHeight)
-                    area.Height = vp.MapHeight;
+            var a = GetComponent<Actor>(ComponentType.Actor);
+            if(a != null)
+            {
+                var RenderArea = a.Map.MapData.textSurface.RenderArea;
+                var area = new Rectangle(this.Position.X - (RenderArea.Width / 2),
+                        this.Position.Y - (RenderArea.Height / 2),
+                        RenderArea.Width, RenderArea.Height);
+                if (area.Width > a.Map.Width)
+                    area.Width = a.Map.Width;
+                if (area.Height > a.Map.Height)
+                    area.Height = a.Map.Height;
 
                 if (area.X < 0)
                     area.X = 0;
                 if (area.Y < 0)
                     area.Y = 0;
 
-                if (area.X + area.Width > vp.MapWidth)
-                    area.X = vp.MapWidth- area.Width;
-                if (area.Y + area.Height > vp.MapHeight)
-                    area.Y = vp.MapHeight- area.Height;
+                if (area.X + area.Width > a.Map.Width)
+                    area.X = a.Map.Width- area.Width;
+                if (area.Y + area.Height > a.Map.Height)
+                    area.Y = a.Map.Height- area.Height;
 
-                vp.RenderArea = area;
+                if(a != null)
+                {
 
-                Offset = vp.Position - vp.RenderArea.Location;
+                    a.Map.MapData.textSurface.RenderArea = area;
+                }
+
+                Offset = new Point(0, 0) - area.Location;
 
 
+
+            }
         }
         protected override void OnPositionChanged(Point oldLocation)
         {
-            //TODO: Kolla om enna entity är densamme som "ViewPort(den statiska kamera klassen/funktionen?) / Kamera" skall följa? det vill säga högst up på stacken.
-
-			var ViewPort = GetComponent<ViewPort>(ComponentType.ViewPort);
-            if(ViewPort != null)
-            {
-                AlignViewPort(ViewPort);
-            }
-            //TODO: Gör detta med FOV på ett helt annat sätt.. kanske kameran skall ha ansvar för detta? eller ta reda på om LineOfSight behövs/kan användas , i sådana fall kan dem ju vara i samma klass
-            var FOV = GetComponent<FOV>(ComponentType.FOV);
-            if(FOV != null)
-            {
-                FOV.Dirty = true;
-            }
-
             var a = GetComponent<Actor>(ComponentType.Actor);
             if(a != null)
             {
                 if(a.Map != null)
                 {
+                    if(a.Map.CameraFollow == GetParent())
+                    {
+
+                        AlignViewPort();
+                    }
+
                     a.Map.MapData.Map.SetCellProperties(oldLocation.X, oldLocation.Y, true, true);
                     a.Map.MapData.Map.SetCellProperties(this.Position.X, this.Position.Y, true, false);
                 }
@@ -119,14 +121,13 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
         private void Move(Point amount)
         {
             Point newPos = this.Position + amount;
-            System.Console.WriteLine(string.Format("Try Move to X:{0}, Y:{1}", newPos.X, newPos.Y));
+            //System.Console.WriteLine(string.Format("Try Move to X:{0}, Y:{1}", newPos.X, newPos.Y));
             var a = GetComponent<Actor>(ComponentType.Actor);
-            System.Console.WriteLine(string.Format("Is X:{0}, Y:{1}, Walkable?:{2}", newPos.X, newPos.Y, a.Map.MapData.IsWalkable(newPos.X, newPos.Y)));
+            //System.Console.WriteLine(string.Format("Is X:{0}, Y:{1}, Walkable?:{2}", newPos.X, newPos.Y, a.Map.MapData.IsWalkable(newPos.X, newPos.Y)));
             if(a.Map.MapData.IsWalkable(newPos.X, newPos.Y))
             {
 
                 this.Position += amount;
-                System.Console.WriteLine(this.Position);
                 //FIXME: If Entity Moves Change or set and remove IsWalkable or respective either here or in OnPositionChanged
                 return;
 	        }

@@ -54,8 +54,8 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
             this.GetParent().AddComponent(new SpriteAnimation(symbol, foreground, background));
             this.GetParent().AddComponent(new Attack());
             this.GetParent().AddComponent(new Defence());
-            Stats = this.GetComponent<Statistic>(ComponentType.Stats);
             Sprite = this.GetComponent<SpriteAnimation>(ComponentType.SpriteAnimation);
+            Stats = this.GetComponent<Statistic>(ComponentType.Stats);
 
         }
 

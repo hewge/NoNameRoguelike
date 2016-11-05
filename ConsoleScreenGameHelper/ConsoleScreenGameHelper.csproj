@@ -40,20 +40,23 @@
     <Reference Include="OpenTK">
       <HintPath>..\packages\MonoGame.Framework.DesktopGL.3.5.1.1679\lib\net40\OpenTK.dll</HintPath>
     </Reference>
-    <Reference Include="SadConsole.Core.OpenGL">
-      <HintPath>..\packages\SadConsole.Core.MonoGameGL.5.0.7\lib\net45\SadConsole.Core.OpenGL.dll</HintPath>
-    </Reference>
     <Reference Include="SadConsole.Controls.OpenGL">
       <HintPath>..\packages\SadConsole.Controls.MonoGameGL.3.1.1\lib\net45\SadConsole.Controls.OpenGL.dll</HintPath>
-    </Reference>
-    <Reference Include="SadConsole.GameHelpers.OpenGL">
-      <HintPath>..\packages\SadConsole.GameHelpers.MonoGameGL.4.3.0\lib\net45\SadConsole.GameHelpers.OpenGL.dll</HintPath>
     </Reference>
     <Reference Include="RogueSharp">
       <HintPath>..\packages\RogueSharp.3.0.0\lib\portable-net40+sl50+win+wpa81+wp80\RogueSharp.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentBehaviourTree">
+      <HintPath>..\packages\FluentBehaviourTree.0.0.4.0\lib\net35\FluentBehaviourTree.dll</HintPath>
+    </Reference>
+    <Reference Include="SadConsole.Core.OpenGL">
+      <HintPath>..\packages\SadConsole.Core.MonoGameGL.5.0.8\lib\net45\SadConsole.Core.OpenGL.dll</HintPath>
+    </Reference>
+    <Reference Include="SadConsole.GameHelpers.OpenGL">
+      <HintPath>..\packages\SadConsole.GameHelpers.MonoGameGL.4.4.0\lib\net45\SadConsole.GameHelpers.OpenGL.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
