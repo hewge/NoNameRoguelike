@@ -9,7 +9,7 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
 	public class Defence : Component
 	{
 
-        public override ComponentType ComponentType { get { return ComponentType.Attack; } }
+        public override ComponentType ComponentType { get { return ComponentType.Defence; } }
         public Statistic Stats { get{ return this.GetComponent<Actor>(ComponentType.Actor).Stats; }  }
 
 		public Defence ()

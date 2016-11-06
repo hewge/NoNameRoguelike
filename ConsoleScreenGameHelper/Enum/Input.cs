@@ -7,7 +7,8 @@ namespace ConsoleScreenGameHelper.Enum
         Up,
         Down,
         Left,
-        Right
+        Right,
+        None
 	}
 }
 

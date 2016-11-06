@@ -28,6 +28,9 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
                 case Input.Left:
                     GetParent().FireEvent(this, new NewMoveEventArgs(Direction.Left));
                     break;
+                case Input.None:
+                    GetParent().FireEvent(this, new NewMoveEventArgs(Direction.None));
+                    break;
             }
         }
 

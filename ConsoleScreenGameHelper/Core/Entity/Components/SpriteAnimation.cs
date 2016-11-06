@@ -18,6 +18,8 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
         [JsonProperty]
         public Color Background { get; set; }
 
+        bool didPlayerAct = false;
+
 		public SpriteAnimation(int symbol, Color foregroundColor, Color backgroundColor)
 		{
             Symbol = symbol;
@@ -38,8 +40,14 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
 
         public override void Update()
         {
+            if(didPlayerAct)
+            {
+                var a = GetComponent<Actor>(ComponentType.Actor);
+                a.Map.EntityContainer.DidPlayerAct = true;
+            }
             this.RenderOffset = Offset;
             base.Update();
+            didPlayerAct = false;
         }
 
         public override void FireEvent(object sender, EventArgs e)
@@ -59,6 +67,9 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
                         break;
                     case Direction.Right:
                         Move(new Point(1, 0));
+                        break;
+                    case Direction.None:
+                        Move(new Point(0, 0));
                         break;
                 }
             }
@@ -109,7 +120,6 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
                 {
                     if(a.Map.CameraFollow == GetParent())
                     {
-                        a.Map.EntityContainer.DidPlayerAct = true;
                         AlignViewPort();
                     }
 
@@ -139,6 +149,11 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
             //System.Console.WriteLine(string.Format("Try Move to X:{0}, Y:{1}", newPos.X, newPos.Y));
             var a = GetComponent<Actor>(ComponentType.Actor);
             //System.Console.WriteLine(string.Format("Is X:{0}, Y:{1}, Walkable?:{2}", newPos.X, newPos.Y, a.Map.MapData.IsWalkable(newPos.X, newPos.Y)));
+            if(a.Map.CameraFollow == GetParent())
+            {
+                didPlayerAct = true;
+            }
+
             if(a.Map.MapData.IsWalkable(newPos.X, newPos.Y))
             {
 

@@ -32,6 +32,7 @@ namespace NoNameRoguelike.Core.Console
             inputManager.AddButton(Keys.Up, Input.Up);
             inputManager.AddButton(Keys.Left, Input.Left);
             inputManager.AddButton(Keys.Right, Input.Right);
+            inputManager.AddButton(Keys.OemPeriod, Input.None);
             TextSurface.RenderArea = new Rectangle(0, 0, viewWidth, viewHeight);
             playerEntity = new BaseEntity(GameWorld.MessageLog);
             playerEntity.NAME = "Player";

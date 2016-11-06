@@ -49,8 +49,8 @@ namespace ConsoleScreenGameHelper.Core.Entity.AI.Behaviour
                     System.Console.WriteLine("PATH NOT FOUND!");
                 }
 
-                ac.Map.MapData.SetIsWalkable(pos.X, pos.Y, true);
-                ac.Map.MapData.SetIsWalkable(playerPos.X, playerPos.Y, true);
+                ac.Map.MapData.SetIsWalkable(pos.X, pos.Y, false);
+                ac.Map.MapData.SetIsWalkable(playerPos.X, playerPos.Y, false);
 
                 if(path != null)
                 {
