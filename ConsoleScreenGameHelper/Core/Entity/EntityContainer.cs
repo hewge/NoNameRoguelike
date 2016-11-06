@@ -10,10 +10,25 @@ namespace ConsoleScreenGameHelper.Core.Entity
 	public class EntityContainer : Collection<BaseEntity>
 	{
         public ScheduleManager ScheduleManager { get; private set; }
+        public BaseEntity Player { get; private set; }
+        public bool DidPlayerAct { get; set; }
+        public bool IsPlayerTurn { get; set; }
 		public EntityContainer()
 		{
             ScheduleManager = new ScheduleManager();
 		}
+
+        private void GetPlayer()
+        {
+            foreach(BaseEntity be in this)
+            {
+                if(be.GetComponent<PlayerInput>(ComponentType.PlayerInput) != null)
+                {
+                    Player = be;
+                    break;
+                }
+            }
+        }
 
         public new void Add(BaseEntity be)
         {
@@ -37,11 +52,40 @@ namespace ConsoleScreenGameHelper.Core.Entity
 
         public void Update()
         {
-            foreach(BaseEntity be in this)
+            if(Player == null)
             {
-                be.Update();
+                GetPlayer();
+            }
+            DidPlayerAct = false;
+            if(IsPlayerTurn)
+            {
+                Player.Update();
+                if(DidPlayerAct == true)
+                {
+                    IsPlayerTurn = false;
+                }
+            }
+            else
+            {
+                NextAct();
             }
 
+        }
+
+        private void NextAct()
+        {
+            IScheduleable scheduleable = ScheduleManager.Get();
+            if((scheduleable as Actor).GetParent() == Player)
+            {
+                IsPlayerTurn = true;
+            }
+            else
+            {
+                var ai = (scheduleable as Actor).GetComponent<ConsoleScreenGameHelper.Core.Entity.Components.AI>(ComponentType.AI);
+                ai.Act();
+                (scheduleable as Actor).GetParent().Update();
+                NextAct();
+            }
         }
 
         public void Render()

@@ -42,6 +42,7 @@ namespace NoNameRoguelike.Core.Console
 
             testMob = new BaseEntity(GameWorld.MessageLog);
             testMob.AddComponent(new Actor(mapLevel));
+            testMob.AddComponent(new AI());
             mapLevel.EntityContainer.Add(testMob);
             mapLevel.EntityContainer.Add(playerEntity);
 

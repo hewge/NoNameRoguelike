@@ -1,6 +1,5 @@
 ﻿using System;
 using Newtonsoft.Json;
-using RogueSharp;
 using ConsoleScreenGameHelper.Enum;
 using ConsoleScreenGameHelper.EventHandler;
 using Microsoft.Xna.Framework;
@@ -110,7 +109,7 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
                 {
                     if(a.Map.CameraFollow == GetParent())
                     {
-
+                        a.Map.EntityContainer.DidPlayerAct = true;
                         AlignViewPort();
                     }
 
@@ -119,7 +118,7 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
                 }
             }
         }
-        public void Move(ICell cell)
+        public void Move(RogueSharp.Cell cell)
         {
             Point mv = new Point(0, 0);
             if(cell.X > Position.X)

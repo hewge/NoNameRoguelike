@@ -19,6 +19,7 @@ namespace ConsoleScreenGameHelper.Core.Map
         public readonly int Height;
 
         private Stack cameraFollow = new Stack();
+        //Right now this is and must be only player.
         public BaseEntity CameraFollow { get{ return (BaseEntity)cameraFollow.Peek(); } set{ cameraFollow.Push(value); } }
 
 		public MapLevel(int width, int height, IMapCreationStrategy<RogueSharp.Map> mapCreationStrategy, ITextSurfaceRendered textSurface)

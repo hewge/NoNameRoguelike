@@ -1,4 +1,5 @@
 ﻿using System;
+using ConsoleScreenGameHelper.Core.Entity.AI.Behaviour;
 using System.Collections.Generic;
 using ConsoleScreenGameHelper.Interface;
 
@@ -15,8 +16,17 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
 		public AI ()
 		{
             behaviours = new List<IBehaviour>();
-            behaviours.Add(new MoveAndAttack(GetParent()));
 		}
+
+        public override void OnAfterInitialize()
+        {
+            behaviours.Add(new MoveAndAttack(GetParent()));
+        }
+
+        public void Act()
+        {
+            behaviours[0].Act();
+        }
 
         public override void FireEvent(object sender, EventArgs e)
         {

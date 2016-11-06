@@ -1,4 +1,6 @@
 ﻿using System;
+using ConsoleScreenGameHelper.Core.Entity.Components;
+using Point = Microsoft.Xna.Framework.Point;
 using RogueSharp;
 using ConsoleScreenGameHelper.Interface;
 
@@ -16,7 +18,7 @@ namespace ConsoleScreenGameHelper.Core.Entity.AI.Behaviour
         public bool Act()
         {
             var ac = parent.GetComponent<Actor>(ComponentType.Actor);
-            var ai = parent.GetComponent<AI>(ComponentType.AI);
+            var ai = parent.GetComponent<Components.AI>(ComponentType.AI);
             var pos = parent.GetComponent<SpriteAnimation>(ComponentType.SpriteAnimation).Position;
             IMap map = ac.Map.MapData.Map;
             Point playerPos = ac.Map.CameraFollow.GetComponent<SpriteAnimation>(ComponentType.SpriteAnimation).Position;
@@ -32,9 +34,9 @@ namespace ConsoleScreenGameHelper.Core.Entity.AI.Behaviour
             }
             if(ai.TurnsAlerted.HasValue)
             {
-                map.SetIsWalkable(pos.X, pos.Y, true);
-                map.SetIsWalkable(playerPos.X, playerPos.Y, true);
-                
+                ac.Map.MapData.SetIsWalkable(pos.X, pos.Y, true);
+                ac.Map.MapData.SetIsWalkable(playerPos.X, playerPos.Y, true);
+
                 PathFinder pathFinder = new PathFinder(map);
                 Path path = null;
 
@@ -47,8 +49,8 @@ namespace ConsoleScreenGameHelper.Core.Entity.AI.Behaviour
                     System.Console.WriteLine("PATH NOT FOUND!");
                 }
 
-                map.SetIsWalkable(pos.X, pos.Y, true);
-                map.SetIsWalkable(playerPos.X, playerPos.Y, true);
+                ac.Map.MapData.SetIsWalkable(pos.X, pos.Y, true);
+                ac.Map.MapData.SetIsWalkable(playerPos.X, playerPos.Y, true);
 
                 if(path != null)
                 {
