@@ -72,6 +72,8 @@
     <Folder Include="Manager\" />
     <Folder Include="Factory\" />
     <Folder Include="Core\Map\" />
+    <Folder Include="Core\Entity\AI\" />
+    <Folder Include="Core\Entity\AI\Behaviour\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameComponent\GameStateManager.cs" />
@@ -110,6 +112,9 @@
     <Compile Include="Core\Entity\Components\Defence.cs" />
     <Compile Include="Interface\IScheduleable.cs" />
     <Compile Include="Manager\ScheduleManager.cs" />
+    <Compile Include="Interface\IBehaviour.cs" />
+    <Compile Include="Core\Entity\Components\AI.cs" />
+    <Compile Include="Core\Entity\AI\Behaviour\MoveAndAttack.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

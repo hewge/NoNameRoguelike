@@ -10,7 +10,8 @@ namespace ConsoleScreenGameHelper.Core.Entity
         Actor,
         Attack,
         Stats,
-        Defence
+        Defence,
+        AI
 	}
 }
 

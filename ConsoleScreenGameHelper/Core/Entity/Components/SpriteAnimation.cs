@@ -1,5 +1,6 @@
 ﻿using System;
 using Newtonsoft.Json;
+using RogueSharp;
 using ConsoleScreenGameHelper.Enum;
 using ConsoleScreenGameHelper.EventHandler;
 using Microsoft.Xna.Framework;
@@ -117,6 +118,21 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
                     a.Map.MapData.Map.SetCellProperties(this.Position.X, this.Position.Y, true, false);
                 }
             }
+        }
+        public void Move(ICell cell)
+        {
+            Point mv = new Point(0, 0);
+            if(cell.X > Position.X)
+                mv += new Point(1, 0);
+            if(cell.X < Position.X)
+                mv += new Point(-1, 0);
+            if(cell.Y < Position.Y)
+                mv += new Point(0, -1);
+            if(cell.Y > Position.Y)
+                mv += new Point(0, 1);
+
+            Move(mv);
+
         }
         private void Move(Point amount)
         {

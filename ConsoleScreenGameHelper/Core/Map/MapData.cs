@@ -40,6 +40,10 @@ namespace ConsoleScreenGameHelper.Core.Map
         {
             return map.IsWalkable(x, y);
         }
+        public void SetIsWalkable(int x, int y, bool val)
+        {
+            map.SetCellProperties(x, y, true, val);
+        }
 
         public void ComputeFOV(BaseEntity be)
         {

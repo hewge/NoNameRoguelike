@@ -10,7 +10,7 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
 {
 	public class Actor : Component, IScheduleable
 	{
-        public int Time { get; set; }
+        public int Time { get{ return Stats.Speed; } }
         [JsonIgnore]
         public Statistic Stats { get; set; }
         [JsonIgnore]
