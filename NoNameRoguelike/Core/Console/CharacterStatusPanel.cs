@@ -5,6 +5,7 @@ using ConsoleScreenGameHelper.Core.Console;
 using ConsoleScreenGameHelper.Core.Entity.Components;
 using ConsoleScreenGameHelper.EventHandler;
 using Microsoft.Xna.Framework;
+using MathHelper = Microsoft.Xna.Framework.MathHelper;
 using SadConsole;
 
 namespace NoNameRoguelike.Core.Console
@@ -27,7 +28,7 @@ namespace NoNameRoguelike.Core.Console
 
         public int Health
         {
-            set{ _health = value; RedrawPanel(); }
+            set{ _health = MathHelper.Clamp(value, 0, _maxHealth); RedrawPanel(); }
         }
         public int MaxHealth
         {
@@ -36,7 +37,7 @@ namespace NoNameRoguelike.Core.Console
 
         public int Energy
         {
-            set{ _energy = value; RedrawPanel(); }
+            set{ _energy = MathHelper.Clamp(value, 0, _maxEnergy); RedrawPanel(); }
         }
         public int MaxEnergy
         {

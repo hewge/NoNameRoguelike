@@ -161,6 +161,11 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
                 //FIXME: If Entity Moves Change or set and remove IsWalkable or respective either here or in OnPositionChanged
                 return;
 	        }
+            if(amount == new Point(0, 0))
+            {
+                //Do not attack thy self.
+                return;
+            }
             var atk = GetComponent<Attack>(ComponentType.Attack);
             if(atk != null)
             {

@@ -56,7 +56,8 @@ namespace ConsoleScreenGameHelper.Core.Entity.AI.Behaviour
                 {
                     try
                     {
-                        ac.Sprite.Move(path.StepForward());
+                        ac.Sprite.Move(path.CurrentStep);
+                        path.StepForward();
                     }
                     catch(NoMoreStepsException)
                     {
