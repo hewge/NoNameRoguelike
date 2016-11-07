@@ -1,4 +1,5 @@
 ﻿using System;
+using ConsoleScreenGameHelper.Core.Entity.Components;
 using ConsoleScreenGameHelper.Core.Entity.AI.Behaviour;
 using System.Collections.Generic;
 using ConsoleScreenGameHelper.Interface;
@@ -11,21 +12,31 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
 
         public override ComponentType ComponentType { get{ return ComponentType.AI; } }
 
-        List<IBehaviour> behaviours;
+        Dictionary<string, IBehaviour> behaviours;
 
 		public AI ()
 		{
-            behaviours = new List<IBehaviour>();
+            behaviours = new Dictionary<string, IBehaviour>();
 		}
 
         public override void OnAfterInitialize()
         {
-            behaviours.Add(new MoveAndAttack(GetParent()));
+            behaviours.Add("MoveAndAttack", new MoveAndAttack(GetParent()));
+            behaviours.Add("RunAway", new RunAway(GetParent()));
         }
 
         public void Act()
         {
-            behaviours[0].Act();
+            Actor a = GetComponent<Actor>(ComponentType.Actor);
+            if(a.Stats.Health < (a.Stats.MaxHealth*0.50) && behaviours.ContainsKey("RunAway"))
+            {
+                System.Console.WriteLine("RUN AWAY!!!");
+                behaviours["RunAway"].Act();
+            }
+            else
+            {
+                behaviours["MoveAndAttack"].Act();
+            }
         }
 
         public override void FireEvent(object sender, EventArgs e)

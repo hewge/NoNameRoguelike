@@ -46,7 +46,9 @@ namespace ConsoleScreenGameHelper.Core.Entity.AI.Behaviour
                 }
                 catch(PathNotFoundException)
                 {
-                    System.Console.WriteLine("PATH NOT FOUND!");
+
+                    //(message in logger?)
+                    System.Console.WriteLine("MoveAndAttack - PathNotFoundException");
                 }
 
                 ac.Map.MapData.SetIsWalkable(pos.X, pos.Y, false);
@@ -61,7 +63,7 @@ namespace ConsoleScreenGameHelper.Core.Entity.AI.Behaviour
                     }
                     catch(NoMoreStepsException)
                     {
-                        System.Console.WriteLine("NO MORE STEPS!");
+                        System.Console.WriteLine("MoveAndAttack - NoMoreStepsException");
                     }
                 }
                 ai.TurnsAlerted++;

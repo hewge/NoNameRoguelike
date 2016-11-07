@@ -12,18 +12,12 @@ namespace ConsoleScreenGameHelper.Core.Map
 {
 	public class MapGenerator<T> where T : RogueSharp.IMap
 	{
-        private readonly int width;
-        private readonly int height;
-
-
         MapData dataMap;
 
         private readonly IMapCreationStrategy<T> mapCreationStrategy;
 
 		public MapGenerator(int width, int height, IMapCreationStrategy<T> mapCreationStrategy, ITextSurfaceRendered textSurface)
 		{
-            this.width = width;
-            this.height = height;
             this.mapCreationStrategy = mapCreationStrategy;
 
             dataMap = new MapData(width, height, textSurface);

@@ -115,6 +115,7 @@
     <Compile Include="Interface\IBehaviour.cs" />
     <Compile Include="Core\Entity\Components\AI.cs" />
     <Compile Include="Core\Entity\AI\Behaviour\MoveAndAttack.cs" />
+    <Compile Include="Core\Entity\AI\Behaviour\RunAway.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
