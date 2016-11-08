@@ -22,21 +22,22 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
         Color foreground;
         Color background;
         int strenght;
-        int speed;
+        int dexterity;
+        int vitality;
         int intelligence;
         int symbol;
 
-		public Actor() : this(Color.Blue, Color.Black, null, 8, 8, 8,  '%')
+		public Actor() : this(Color.Blue, Color.Black, null, 8, 8, 8, 8, '%')
 		{
 			
 		}
 
-        public Actor(MapLevel map) : this(Color.Blue, Color.Black, map, 8, 8, 8, '%')
+        public Actor(MapLevel map) : this(Color.Blue, Color.Black, map, 8, 8, 8, 8, '%')
         {
 
         }
 
-		public Actor(Color foreground, Color background, MapLevel map, int str, int spd, int inte, int symbol = '%')
+		public Actor(Color foreground, Color background, MapLevel map, int str, int dex, int vit, int inte, int symbol = '%')
 		{
             //KAN EJ LÄGGA TILL KOMPONENTER I EN ANNAN KOMPONENTS CONSTRUCTOR.
             this.Map = map;
@@ -44,13 +45,14 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
             this.background = background;
             this.intelligence = inte;
             this.strenght = str;
-            this.speed = spd;
+            this.dexterity = dex;
+            this.vitality = vit;
             this.symbol = symbol;
 		}
 
         public override void OnAfterInitialize()
         {
-            this.GetParent().AddComponent(new Statistic(strenght, speed, intelligence));
+            this.GetParent().AddComponent(new Statistic(strenght, dexterity, vitality, intelligence));
             this.GetParent().AddComponent(new SpriteAnimation(symbol, foreground, background));
             this.GetParent().AddComponent(new Attack());
             this.GetParent().AddComponent(new Defence());
