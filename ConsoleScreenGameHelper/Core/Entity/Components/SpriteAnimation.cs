@@ -169,7 +169,6 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
             var atk = GetComponent<Attack>(ComponentType.Attack);
             if(atk != null)
             {
-                System.Console.WriteLine("Attack");
                 GetParent().FireEvent(this, new NewAttackEventArgs(newPos));
             }
 

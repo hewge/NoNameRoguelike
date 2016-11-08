@@ -28,9 +28,9 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
         public void Act()
         {
             Actor a = GetComponent<Actor>(ComponentType.Actor);
-            if(a.Stats.Health < (a.Stats.MaxHealth*0.50) && behaviours.ContainsKey("RunAway"))
+
+            if(a.Stats.Health < (a.Stats.MaxHealth*0.16) && behaviours.ContainsKey("RunAway"))
             {
-                System.Console.WriteLine("RUN AWAY!!!");
                 behaviours["RunAway"].Act();
             }
             else

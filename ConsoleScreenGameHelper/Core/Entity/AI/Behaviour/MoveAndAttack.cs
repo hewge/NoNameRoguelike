@@ -28,7 +28,7 @@ namespace ConsoleScreenGameHelper.Core.Entity.AI.Behaviour
                 fov.ComputeFov(pos.X, pos.Y, ac.Stats.Awareness , true);
                 if(fov.IsInFov(playerPos.X, playerPos.Y))
                 {
-                    System.Console.WriteLine("PLAYER FOUND!");
+                    System.Console.WriteLine("MoveAndAttack - Player Found!");
                     ai.TurnsAlerted = 1;
                 }
             }

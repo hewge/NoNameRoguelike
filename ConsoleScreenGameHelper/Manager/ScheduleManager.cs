@@ -58,7 +58,6 @@ namespace ConsoleScreenGameHelper.Manager
             this.Remove(firstScheduleable);
             time = firstKey;
             this.Add(firstScheduleable);
-            System.Console.WriteLine("Returning BaseEntity.ToString():{0}", (firstScheduleable as Actor).GetParent().ToString());
             return firstScheduleable;
         }
 
