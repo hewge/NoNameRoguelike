@@ -28,11 +28,22 @@ namespace NoNameRoguelike.Core.Console
             mapLevel = new MapLevel(mapWidth, mapHeight, ms, TextSurface);
 
             inputManager = new InputManager();
-            inputManager.AddButton(Keys.Down, Input.Down);
-            inputManager.AddButton(Keys.Up, Input.Up);
-            inputManager.AddButton(Keys.Left, Input.Left);
-            inputManager.AddButton(Keys.Right, Input.Right);
+            inputManager.AddButton(Keys.Down, Input.South);
+            inputManager.AddButton(Keys.Up, Input.North);
+            inputManager.AddButton(Keys.Left, Input.West);
+            inputManager.AddButton(Keys.Right, Input.East);
             inputManager.AddButton(Keys.OemPeriod, Input.None);
+
+            inputManager.AddButton(Keys.NumPad2, Input.South);
+            inputManager.AddButton(Keys.NumPad8, Input.North);
+            inputManager.AddButton(Keys.NumPad4, Input.West);
+            inputManager.AddButton(Keys.NumPad6, Input.East);
+            inputManager.AddButton(Keys.NumPad9, Input.NorthEast);
+            inputManager.AddButton(Keys.NumPad7, Input.NorthWest);
+            inputManager.AddButton(Keys.NumPad3, Input.SouthEast);
+            inputManager.AddButton(Keys.NumPad1, Input.SouthWest);
+            inputManager.AddButton(Keys.NumPad5, Input.None);
+
             TextSurface.RenderArea = new Rectangle(0, 0, viewWidth, viewHeight);
             playerEntity = new BaseEntity(GameWorld.MessageLog);
             playerEntity.NAME = "Player";

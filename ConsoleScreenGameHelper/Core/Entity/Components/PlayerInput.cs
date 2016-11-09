@@ -16,17 +16,29 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
         {
             switch (e.Input)
             {
-                case Input.Up:
-                    GetParent().FireEvent(this, new NewMoveEventArgs(Direction.Up));
+                case Input.North:
+                    GetParent().FireEvent(this, new NewMoveEventArgs(Direction.North));
                     break;
-                case Input.Down:
-                    GetParent().FireEvent(this, new NewMoveEventArgs(Direction.Down));
+                case Input.South:
+                    GetParent().FireEvent(this, new NewMoveEventArgs(Direction.South));
                     break;
-                case Input.Right:
-                    GetParent().FireEvent(this, new NewMoveEventArgs(Direction.Right));
+                case Input.East:
+                    GetParent().FireEvent(this, new NewMoveEventArgs(Direction.East));
                     break;
-                case Input.Left:
-                    GetParent().FireEvent(this, new NewMoveEventArgs(Direction.Left));
+                case Input.West:
+                    GetParent().FireEvent(this, new NewMoveEventArgs(Direction.West));
+                    break;
+                case Input.NorthEast:
+                    GetParent().FireEvent(this, new NewMoveEventArgs(Direction.NorthEast));
+                    break;
+                case Input.NorthWest:
+                    GetParent().FireEvent(this, new NewMoveEventArgs(Direction.NorthWest));
+                    break;
+                case Input.SouthEast:
+                    GetParent().FireEvent(this, new NewMoveEventArgs(Direction.SouthEast));
+                    break;
+                case Input.SouthWest:
+                    GetParent().FireEvent(this, new NewMoveEventArgs(Direction.SouthWest));
                     break;
                 case Input.None:
                     GetParent().FireEvent(this, new NewMoveEventArgs(Direction.None));

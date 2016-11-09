@@ -52,13 +52,16 @@ namespace ConsoleScreenGameHelper.Manager
 
         public IScheduleable Get()
         {
-            int firstKey = (int)scheduleables.GetKey(0);
-            List<IScheduleable> firstGroup = (List<IScheduleable>)scheduleables[firstKey];
-            var firstScheduleable = firstGroup[0];
-            this.Remove(firstScheduleable);
-            time = firstKey;
-            this.Add(firstScheduleable);
-            return firstScheduleable;
+            if(scheduleables.Count > 0)
+            {
+                int firstKey = (int)scheduleables.GetKey(0);
+                List<IScheduleable> firstGroup = (List<IScheduleable>)scheduleables[firstKey];
+                var firstScheduleable = firstGroup[0];
+                this.Remove(firstScheduleable);
+                time = firstKey;
+                return firstScheduleable;
+            }
+            return null;
         }
 
         public int GetTime()

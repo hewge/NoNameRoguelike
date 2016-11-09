@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
 using RogueSharp.DiceNotation;
 using ConsoleScreenGameHelper.EventHandler;
 using Newtonsoft.Json;
@@ -15,6 +16,9 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
             add { statsChanged += value; StatusChanged(); }
             remove { statsChanged -= value; StatusChanged(); }
         }
+        //Buffering for regeneration
+        double _health_buffer;
+        double _energy_buffer;
 
         //Base Stats.
         private int _strenght;
@@ -71,11 +75,11 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
         public double EnergyRegeneration { get{ return _enRegen; } set{ _enRegen = value; } }
 
         [JsonProperty]
-        public int Health { get{ return _health; } set{ _health = value; StatusChanged(); } }
+        public int Health { get{ return _health; } set{ _health = MathHelper.Clamp(value, 0, MaxHealth); StatusChanged(); } }
         [JsonProperty]
         public int MaxHealth { get{ return _maxHealth; } set{ _maxHealth = value; StatusChanged(); } }
         [JsonProperty]
-        public int Energy { get{ return _energy; } set{ _energy = value; StatusChanged(); } }
+        public int Energy { get{ return _energy; } set{ _energy = MathHelper.Clamp(value, 0, MaxEnergy); StatusChanged(); } }
         [JsonProperty]
         public int MaxEnergy { get{ return _maxEnergy; } set{ _maxEnergy = value; StatusChanged(); } }
         public bool IsInFov { get{ return GetComponent<Actor>(ComponentType.Actor).Map.MapData.FieldOfView.IsInFov(GetComponent<SpriteAnimation>(ComponentType.SpriteAnimation).Position.X, GetComponent<SpriteAnimation>(ComponentType.SpriteAnimation).Position.Y); } set{ StatusChanged(); }}
@@ -165,6 +169,28 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
 
             StatusChanged();
             calculated = true;
+        }
+
+        public void Tick()
+        {
+            if(_health != _maxHealth)
+                _health_buffer += HealthRegeneration;
+            if(_energy != _maxEnergy)
+                _energy_buffer += EnergyRegeneration;
+
+            while(_health_buffer >= 1)
+            {
+                _health += 1;
+                _health_buffer -= 1;
+            }
+            while(_energy_buffer >= 1)
+            {
+                _energy += 1;
+                _energy_buffer -= 1;
+            }
+
+            System.Console.WriteLine("HealthBuffer:{0}, EnergyBuffer:{1}", _health_buffer, _energy_buffer);
+
         }
 
         private void StatusChanged()

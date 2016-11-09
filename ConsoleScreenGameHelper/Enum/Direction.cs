@@ -4,11 +4,15 @@ namespace ConsoleScreenGameHelper.Enum
 {
 	public enum Direction
 	{
-        Up,
-        Down,
-        Left,
-        Right,
-        None
+        None,
+        North,
+        South,
+        West,
+        East,
+        NorthWest,
+        NorthEast,
+        SouthWest,
+        SouthEast
 	}
 }
 

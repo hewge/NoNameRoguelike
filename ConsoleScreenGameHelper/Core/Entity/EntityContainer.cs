@@ -62,12 +62,18 @@ namespace ConsoleScreenGameHelper.Core.Entity
                 Player.Update();
                 if(DidPlayerAct == true)
                 {
+                    if(Player.GetComponent<Statistic>(ComponentType.Stats).Energy > 0)
+                    {
+                        ScheduleManager.Add(Player.GetComponent<Actor>(ComponentType.Actor));
+                    }
                     IsPlayerTurn = false;
+                    TickAll();
                 }
             }
             else
             {
                 NextAct();
+                TickAll();
             }
 
         }
@@ -75,6 +81,13 @@ namespace ConsoleScreenGameHelper.Core.Entity
         private void NextAct()
         {
             IScheduleable scheduleable = ScheduleManager.Get();
+            if(scheduleable == null)
+            {
+                TickAll();
+                AddAll();
+                return;
+            }
+            System.Console.WriteLine("{0}", (scheduleable as Actor).GetParent().NAME);
             if((scheduleable as Actor).GetParent() == Player)
             {
                 IsPlayerTurn = true;
@@ -84,8 +97,41 @@ namespace ConsoleScreenGameHelper.Core.Entity
                 var ai = (scheduleable as Actor).GetComponent<ConsoleScreenGameHelper.Core.Entity.Components.AI>(ComponentType.AI);
                 ai.Act();
                 (scheduleable as Actor).GetParent().Update();
+                if((scheduleable as Actor).Stats.Energy > 0)
+                {
+                    ScheduleManager.Add((scheduleable as Actor));
+                }
                 NextAct();
             }
+        }
+
+        private void TickAll()
+        {
+            foreach(BaseEntity be in this)
+            {
+                var s = be.GetComponent<Statistic>(ComponentType.Stats);
+                if( s != null)
+                {
+                    s.Tick();
+                }
+
+            }
+        }
+        private void AddAll()
+        {
+            foreach(BaseEntity be in this)
+            {
+                var a = be.GetComponent<Actor>(ComponentType.Actor);
+                if( a != null)
+                {
+                    if(a.Stats.Energy != 0)
+                    {
+                        ScheduleManager.Add(a);
+                    }
+                }
+
+            }
+
         }
 
         public void Render()

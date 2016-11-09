@@ -18,6 +18,13 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
 
         private float ResolveDefence()
         {
+
+            if(GetComponent<Statistic>(ComponentType.Stats).Energy < 5)
+            {
+                return 0f;
+            }
+
+            GetComponent<Statistic>(ComponentType.Stats).Energy -= 3;
             float blockPercent = 0;
             DiceExpression blockDice = new DiceExpression().Dice(Stats.Defence, 100);
             DiceResult blockResult = blockDice.Roll();

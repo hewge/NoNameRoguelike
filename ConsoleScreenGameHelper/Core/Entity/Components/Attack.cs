@@ -16,6 +16,11 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
 
         private float ResolveAttack()
         {
+            if(GetComponent<Statistic>(ComponentType.Stats).Energy < 5)
+            {
+                return 0f;
+            }
+            GetComponent<Statistic>(ComponentType.Stats).Energy -= 2;
             float hitPercent = 0;
             DiceExpression attackDice = new DiceExpression().Dice(Stats.Attack, 100);
             DiceResult attackResult = attackDice.Roll();

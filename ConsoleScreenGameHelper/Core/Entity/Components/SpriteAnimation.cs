@@ -56,18 +56,31 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
             {
                 switch((e as NewMoveEventArgs).Direction)
                 {
-                    case Direction.Up:
+                    case Direction.North:
                         Move(new Point(0, -1));
                         break;
-                    case Direction.Down:
+                    case Direction.South:
                         Move(new Point(0, 1));
                         break;
-                    case Direction.Left:
+                    case Direction.West:
                         Move(new Point(-1, 0));
                         break;
-                    case Direction.Right:
+                    case Direction.East:
                         Move(new Point(1, 0));
                         break;
+                    case Direction.NorthEast:
+                        Move(new Point(1, -1));
+                        break;
+                    case Direction.NorthWest:
+                        Move(new Point(-1, -1));
+                        break;
+                    case Direction.SouthEast:
+                        Move(new Point(1, 1));
+                        break;
+                    case Direction.SouthWest:
+                        Move(new Point(-1, 1));
+                        break;
+
                     case Direction.None:
                         Move(new Point(0, 0));
                         break;
@@ -145,6 +158,14 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
         }
         private void Move(Point amount)
         {
+            if(GetComponent<Statistic>(ComponentType.Stats).Energy < 1)
+            {
+                return;
+            }
+            if(amount != new Point(0, 0))
+            {
+                GetComponent<Statistic>(ComponentType.Stats).Energy -= 1;
+            }
             Point newPos = this.Position + amount;
             //System.Console.WriteLine(string.Format("Try Move to X:{0}, Y:{1}", newPos.X, newPos.Y));
             var a = GetComponent<Actor>(ComponentType.Actor);
@@ -166,6 +187,7 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
                 //Do not attack thy self.
                 return;
             }
+
             var atk = GetComponent<Attack>(ComponentType.Attack);
             if(atk != null)
             {
