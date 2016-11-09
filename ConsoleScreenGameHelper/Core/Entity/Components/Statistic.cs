@@ -161,10 +161,10 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
                 DiceExpression diceExpression = new DiceExpression().Dice(2, 3, 1, choose: 1);
                 def_c+=diceExpression.Roll().Value;
             }
-            _defence=(int)def_c;
+            _defenceChance=(int)def_c;
             _awareness=(int)(2+(_intelligence*0.3));
             _speed=(int)(15-(_dexterity*0.4));
-            _hpRegen=(_vitality+_intelligence)*0.022;
+            _hpRegen=(_vitality+_intelligence)*0.005;
             _enRegen=(_vitality+_intelligence)*0.053;
 
             StatusChanged();

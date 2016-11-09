@@ -16,7 +16,7 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
 
         private float ResolveAttack()
         {
-            if(GetComponent<Statistic>(ComponentType.Stats).Energy < 5)
+            if(GetComponent<Statistic>(ComponentType.Stats).Energy < 2)
             {
                 return 0f;
             }
