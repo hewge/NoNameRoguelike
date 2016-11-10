@@ -73,7 +73,7 @@ namespace ConsoleScreenGameHelper.Core.Entity
             if(logger != null)
             {
                 //off for now
-                //logger.Debug(string.Format("Event:{0} from {1} fired on {2}.", e, sender, this.NAME));
+                logger.Debug(string.Format("Event:{0} from {1} fired on {2}.", e, sender, this.NAME));
             }
             foreach(var component in _components)
             {

@@ -119,6 +119,7 @@
     <Compile Include="Core\Entity\Components\AI.cs" />
     <Compile Include="Core\Entity\AI\Behaviour\MoveAndAttack.cs" />
     <Compile Include="Core\Entity\AI\Behaviour\RunAway.cs" />
+    <Compile Include="Core\Console\ScrollingConsole.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

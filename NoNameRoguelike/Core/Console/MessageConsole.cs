@@ -8,15 +8,15 @@ using Microsoft.Xna.Framework;
 
 namespace NoNameRoguelike.Core.Console
 {
-	public class MessageConsole : BorderedConsole
+	public class MessageConsole : ScrollingConsole
 	{
         private readonly Queue _lines;
 
-		public MessageConsole(int width, int height) : base("Messages", width, height)
+		public MessageConsole(int width, int height) : base( width, height, height + 75)
 		{
 
             _lines = new Queue();
-            VirtualCursor.Position = new Point(1, 1);
+            //VirtualCursor.Position = new Point(1, 1);
             NoNameRoguelike.Core.Systems.MessageLog.FireNewMessage += Message;
 		}
 
@@ -28,34 +28,20 @@ namespace NoNameRoguelike.Core.Console
             {
                 _lines.Dequeue();
             }
-            PrintMessage();
+            PrintMessage(e.Message);
         }
 
-        public void PrintMessage()
+        public void PrintMessage(string text)
         {
-            /*
-            ShiftDown(1);
+            ShiftUp(1);
             VirtualCursor.Print(text).CarriageReturn();
-            VirtualCursor.Right(1);
-            */
-            //FIXME: This, works for now, later find out why the other method wasnt working, and maybe add a scrollbar & checkbox/button for debug messages?, and maybe a button for 'FullScreen View'.
-            this.Clear();
-            var cnt = 1;
-            foreach(var l in _lines)
-            {
-                System.Console.WriteLine((string)l);
-                this.Print(1, cnt, (string)l);
-                this.VirtualCursor.CarriageReturn();
-                cnt++;
-            }
 
         }
 
         public void PrintMessage(ColoredString text)
         {
-            ShiftDown(1);
+            ShiftUp(1);
             VirtualCursor.Print(text).CarriageReturn();
-            VirtualCursor.Right(1);
         }
         public override void Render()
         {
