@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using ConsoleScreenGameHelper.Core.Console;
+﻿using ConsoleScreenGameHelper.Core.Console;
 using ConsoleScreenGameHelper.EventHandler;
 using SadConsole;
-using Microsoft.Xna.Framework;
 
 namespace NoNameRoguelike.Core.Console
 {
-	public class MessageConsole : ScrollingConsole
+	public class MessageConsole : BorderedScrollingConsole
 	{
 
 		public MessageConsole(int width, int height) : base( width, height, height + 75)
