@@ -27,10 +27,13 @@ namespace ConsoleScreenGameHelper.Core.Console
             controlsContainer.MouseCanFocus = false;
             controlsContainer.ProcessMouseWithoutFocus = true;
 
+            this.CanUseMouse = false;
+            this.CanUseKeyboard = false;
+            this.CanFocus = false;
+
             scrollingCounter = 0;
 
-            //--- this ... ----
-            VirtualCursor.Position = new Point(0, bufferHeight);
+
 		}
 
         private void scrollBar_ValueChanged(object sender, EventArgs e)
@@ -68,10 +71,12 @@ namespace ConsoleScreenGameHelper.Core.Console
             base.Update();
             controlsContainer.Update();
 
-            if(TimesShiftedUp != 0 || _virtualCursor.Position.Y >= textSurface.RenderArea.Height + scrollingCounter)
+            if(TimesShiftedUp != 0 || _virtualCursor.Position.Y >= textSurface.RenderArea.Height + scrollingCounter + 1)
             {
+                System.Console.WriteLine("TimesShiftedUp:{0}, Pos:{1}, Counter:{2}", TimesShiftedUp, VirtualCursor.Position, scrollingCounter);
                 scrollBar.IsEnabled = true;
-                if(scrollingCounter < textSurface.Height - textSurface.RenderArea.Height)
+                //Magic '1' is for the bottom most line.
+                if(scrollingCounter < textSurface.Height - textSurface.RenderArea.Height -1)
                 {
                     scrollingCounter += TimesShiftedUp != 0 ? TimesShiftedUp : 1;
                 }
