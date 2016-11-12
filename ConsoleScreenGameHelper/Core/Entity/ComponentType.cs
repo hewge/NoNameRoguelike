@@ -11,7 +11,10 @@ namespace ConsoleScreenGameHelper.Core.Entity
         Attack,
         Stats,
         Defence,
-        AI
+        AI,
+        Equipment,
+        Item,
+        Inventory
 	}
 }
 

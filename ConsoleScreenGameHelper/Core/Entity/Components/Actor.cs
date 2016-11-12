@@ -68,7 +68,7 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
         {
             if(GetParent().logger != null)
             {
-                GetParent().logger.Debug(string.Format("{0}, Has Died.", GetParent().NAME));
+                GetParent().logger.Write(string.Format("{0}, Has Died.", GetParent().NAME));
             }
             Map.MapData.Map.SetCellProperties(Sprite.Position.X, Sprite.Position.Y, true, true);
             Map.EntityContainer.Remove(GetParent());

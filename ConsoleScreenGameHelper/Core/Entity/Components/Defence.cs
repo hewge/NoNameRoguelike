@@ -57,11 +57,10 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
             {
                 var blockPercent = ResolveDefence();
                 var dmg = (e as NewDamageEventArgs).Damage - ((e as NewDamageEventArgs).Damage * blockPercent);
-                System.Console.WriteLine("Damage Inflicted:{0}", (int)dmg);
                 //Take Damage , by first finding out if any "components" want to modify it first.
                 if(GetParent().logger != null)
                 {
-                    GetParent().logger.Write(string.Format("{0}, Blocks {1}% of incoming damage, so {2} damage is Inflicted.", GetParent().NAME, blockPercent, (int)dmg));
+                    GetParent().logger.Write(string.Format("{0}, Blocks {1:0.#}% of incoming damage, {2} damage is Inflicted.", GetParent().NAME, blockPercent*100, (int)dmg));
                 }
                 Stats.Health -= (int)dmg;
             }

@@ -121,6 +121,11 @@
     <Compile Include="Core\Entity\AI\Behaviour\RunAway.cs" />
     <Compile Include="Core\Console\ScrollingConsole.cs" />
     <Compile Include="Core\Console\BorderedScrollingConsole.cs" />
+    <Compile Include="Enum\EquipmentSlot.cs" />
+    <Compile Include="Core\Entity\Components\Equipment.cs" />
+    <Compile Include="Core\Entity\Components\Inventory.cs" />
+    <Compile Include="Core\Entity\Components\Item.cs" />
+    <Compile Include="Interface\IEquipment.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
