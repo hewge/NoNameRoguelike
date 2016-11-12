@@ -23,13 +23,13 @@ namespace NoNameRoguelike.Core.Screen
             int width = 80;
             int height = 45;
 
-            messageConsole = new MessageConsole((int)(width), (int)(height*0.20));
+            messageConsole = new MessageConsole((int)(width), (int)(height*0.30));
             Add(messageConsole);
-            dungeonViewConsole = new DungeonViewConsole((int)(width*0.80), (int)(height*0.80), 30, 30);
-            characterStatusPanel = new CharacterStatusPanel((int)(width*0.20), (int)(height*0.80));
+            dungeonViewConsole = new DungeonViewConsole((int)(width*0.80), (int)(height*0.70), 30, 30);
+            characterStatusPanel = new CharacterStatusPanel((int)(width*0.20), (int)(height*0.70));
 
             characterStatusPanel.Position = new Point((int)(width*0.80), 0);
-            messageConsole.Position = new Point(0, (int)(height*0.80));
+            messageConsole.Position = new Point(0, (int)(height*0.70));
 
             Add(characterStatusPanel);
             Add(dungeonViewConsole);

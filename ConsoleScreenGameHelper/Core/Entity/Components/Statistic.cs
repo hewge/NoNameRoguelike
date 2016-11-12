@@ -4,8 +4,7 @@ using RogueSharp.DiceNotation;
 using ConsoleScreenGameHelper.EventHandler;
 using Newtonsoft.Json;
 
-namespace ConsoleScreenGameHelper.Core.Entity.Components
-{
+namespace ConsoleScreenGameHelper.Core.Entity.Components {
 	public class Statistic : Component
 	{
 
@@ -134,36 +133,36 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
             }
             _maxHealth = _health;
             _maxEnergy = _energy;
-            float atk=0;
+            double atk=0;
             for(int i=0;i<_strenght;i++)
             {
                 DiceExpression diceExpression = new DiceExpression().Dice(1, 2);
-                atk+=diceExpression.Roll().Value/2;
+                atk+=diceExpression.Roll().Value/2.0;
             }
             _attack=(int)atk;
             double def=0;
             for(int i=0;i<_strenght;i++)
             {
                 DiceExpression diceExpression = new DiceExpression().Dice(1, 2);
-                def+=(diceExpression.Roll().Value/2)*0.80;
+                def+=(diceExpression.Roll().Value/2.0)*0.80;
             }
             _defence=(int)def;
-            double atk_c = 50+(_intelligence*0.3);
+            double atk_c = 50.0+(_intelligence*0.3);
             for(int i=0;i<_dexterity;i++)
             {
                 DiceExpression diceExpression = new DiceExpression().Dice(2, 3, 1, choose: 1);
                 atk_c+=diceExpression.Roll().Value;
             }
             _attackChance=(int)atk_c;
-            double def_c = 20+(_intelligence*0.3);
+            double def_c = 20.0+(_intelligence*0.3);
             for(int i=0;i<_dexterity;i++)
             {
                 DiceExpression diceExpression = new DiceExpression().Dice(2, 3, 1, choose: 1);
                 def_c+=diceExpression.Roll().Value;
             }
             _defenceChance=(int)def_c;
-            _awareness=(int)(2+(_intelligence*0.3));
-            _speed=(int)(15-(_dexterity*0.4));
+            _awareness=(int)(2.0+(_intelligence*0.3));
+            _speed=(int)(15.0-(_dexterity*0.4));
             _hpRegen=(_vitality+_intelligence)*0.005;
             _enRegen=(_vitality+_intelligence)*0.053;
 

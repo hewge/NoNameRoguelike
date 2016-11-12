@@ -33,7 +33,7 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
                 }
             }
 
-            var hp = hitPercent/(float)Stats.Attack;
+            float hp = hitPercent/(float)Stats.Attack;
 
             System.Console.WriteLine("HitPercent:{0}", hp);
 
@@ -56,6 +56,12 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
                 BaseEntity other = self_a.Map.GetEntityAt((e as NewAttackEventArgs).Position.X, (e as NewAttackEventArgs).Position.Y);
                 if(other != null)
                 {
+                    if(GetParent().logger != null)
+                    {
+                        GetParent().logger.Write(string.Format("{0}, Attacks {1}, for {2} damage.", GetParent().NAME, other.NAME, (int)dmg));
+                        GetParent().logger.Debug(string.Format("HitPercent : {0}, BaseAttack : {1}", hitPercent, Stats.Attack));
+                    }
+
                     other.FireEvent(this, new NewDamageEventArgs((e as NewAttackEventArgs).Damage));
                 }
             }

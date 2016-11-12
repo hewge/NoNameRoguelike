@@ -29,6 +29,12 @@ namespace ConsoleScreenGameHelper.Core.Entity.AI.Behaviour
                 if(fov.IsInFov(playerPos.X, playerPos.Y))
                 {
                     System.Console.WriteLine("MoveAndAttack - Player Found!");
+                    if(parent.logger != null)
+                    {
+                        parent.logger.Write(string.Format("{0}, Charges forward towards {1}.", parent.NAME, ac.Map.CameraFollow.NAME));
+                    }
+
+
                     ai.TurnsAlerted = 1;
                 }
             }
@@ -48,6 +54,10 @@ namespace ConsoleScreenGameHelper.Core.Entity.AI.Behaviour
                 {
 
                     //(message in logger?)
+                    if(parent.logger != null)
+                    {
+                        parent.logger.Write(string.Format("{0}, Can't seem to find {1}.", parent.NAME, ac.Map.CameraFollow.NAME));
+                    }
                     System.Console.WriteLine("MoveAndAttack - PathNotFoundException");
                 }
 
@@ -64,6 +74,11 @@ namespace ConsoleScreenGameHelper.Core.Entity.AI.Behaviour
                     catch(NoMoreStepsException)
                     {
                         System.Console.WriteLine("MoveAndAttack - NoMoreStepsException");
+                        if(parent.logger != null)
+                        {
+                            //parent.logger.Debug(string.Format("{0}, Can't to advance towards {1}.", parent.NAME, ac.Map.CameraFollow.NAME));
+                        }
+
                     }
                 }
                 ai.TurnsAlerted++;

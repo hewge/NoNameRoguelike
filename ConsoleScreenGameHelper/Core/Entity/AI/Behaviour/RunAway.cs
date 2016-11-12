@@ -36,8 +36,11 @@ namespace ConsoleScreenGameHelper.Core.Entity.AI.Behaviour
             }
             catch(PathNotFoundException)
             {
-                //(message in logger?)(Monster covers in fear)
                 System.Console.WriteLine("RunAway - PathNotFoundException");
+                if(parent.logger != null)
+                {
+                    parent.logger.Write(string.Format("{0}, Finds itself cornered.", parent.NAME));
+                }
             }
             ac.Map.MapData.SetIsWalkable(pos.X, pos.Y, false);
             ac.Map.MapData.SetIsWalkable(playerPos.X, playerPos.Y, false);
@@ -51,8 +54,11 @@ namespace ConsoleScreenGameHelper.Core.Entity.AI.Behaviour
                 }
                 catch(NoMoreStepsException)
                 {
-                    //(message in logger?)(Monster covers in fear)
                     System.Console.WriteLine("RunAway - NoMoreStepsException");
+                    if(parent.logger != null)
+                    {
+                        parent.logger.Write(string.Format("{0}, Has nowhere to run.", parent.NAME));
+                    }
                 }
             }
             return true;

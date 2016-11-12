@@ -18,19 +18,19 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
             {
                 case Input.North:
                     GetParent().FireEvent(this, new NewMoveEventArgs(Direction.North));
-                    GetParent().logger.Debug("NORR");
+                    //GetParent().logger.Debug("NORR");
                     break;
                 case Input.South:
                     GetParent().FireEvent(this, new NewMoveEventArgs(Direction.South));
-                    GetParent().logger.Debug("SYD");
+                    //GetParent().logger.Debug("SYD");
                     break;
                 case Input.East:
                     GetParent().FireEvent(this, new NewMoveEventArgs(Direction.East));
-                    GetParent().logger.Debug("ÖST");
+                    //GetParent().logger.Debug("ÖST");
                     break;
                 case Input.West:
                     GetParent().FireEvent(this, new NewMoveEventArgs(Direction.West));
-                    GetParent().logger.Debug("VÄST");
+                    //GetParent().logger.Debug("VÄST");
                     break;
                 case Input.NorthEast:
                     GetParent().FireEvent(this, new NewMoveEventArgs(Direction.NorthEast));
