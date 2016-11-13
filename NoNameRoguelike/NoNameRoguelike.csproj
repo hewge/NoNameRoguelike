@@ -107,5 +107,6 @@
     <Compile Include="Core\Console\DungeonViewConsole.cs" />
     <Compile Include="GameWorld.cs" />
     <Compile Include="Core\Systems\MessageLog.cs" />
+    <Compile Include="Core\Console\InventoryConsole.cs" />
   </ItemGroup>
 </Project>

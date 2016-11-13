@@ -126,6 +126,7 @@
     <Compile Include="Core\Entity\Components\Inventory.cs" />
     <Compile Include="Core\Entity\Components\Item.cs" />
     <Compile Include="Interface\IEquipment.cs" />
+    <Compile Include="Core\Entity\AI\Behaviour\Roam.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

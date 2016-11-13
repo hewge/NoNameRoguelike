@@ -23,6 +23,7 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
         {
             behaviours.Add("MoveAndAttack", new MoveAndAttack(GetParent()));
             behaviours.Add("RunAway", new RunAway(GetParent()));
+            behaviours.Add("Roam", new Roam(GetParent()));
         }
 
         public void Act()

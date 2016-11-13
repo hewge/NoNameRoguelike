@@ -37,8 +37,8 @@ namespace ConsoleScreenGameHelper.Core.Console
             var consoles = GetEnumerator();
             while(consoles.MoveNext())
             {
-                 ((SadConsole.Consoles.Console)consoles.Current).IsVisible = true;
-                 ((SadConsole.Consoles.Console)consoles.Current).DoUpdate = true;
+                 (consoles.Current as SadConsole.Consoles.IConsole).IsVisible = true;
+                 (consoles.Current as SadConsole.Consoles.IConsole).DoUpdate = true;
             }
             SadConsole.Engine.ConsoleRenderStack.Add(this);
         }

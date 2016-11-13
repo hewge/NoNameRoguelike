@@ -173,23 +173,22 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components {
         public void Tick()
         {
             if(_health != _maxHealth)
-                _health_buffer += HealthRegeneration;
+                _health_buffer += (double)HealthRegeneration;
             if(_energy != _maxEnergy)
-                _energy_buffer += EnergyRegeneration;
+                _energy_buffer += (double)EnergyRegeneration;
 
             while(_health_buffer >= 1)
             {
                 _health += 1;
-                _health_buffer -= 1;
+                _health_buffer -= 1D;
             }
             while(_energy_buffer >= 1)
             {
                 _energy += 1;
-                _energy_buffer -= 1;
+                _energy_buffer -= 1D;
             }
 
-            System.Console.WriteLine("HealthBuffer:{0}, EnergyBuffer:{1}", _health_buffer, _energy_buffer);
-
+            System.Console.WriteLine("HealthBuffer:{0:0.##}, EnergyBuffer:{1:0.##}, for {2}.", _health_buffer, _energy_buffer, GetParent().NAME);
         }
 
         private void StatusChanged()

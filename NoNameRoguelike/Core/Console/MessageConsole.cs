@@ -7,7 +7,7 @@ namespace NoNameRoguelike.Core.Console
 	public class MessageConsole : BorderedScrollingConsole
 	{
 
-		public MessageConsole(int width, int height) : base( width, height, height + 75)
+		public MessageConsole(int width, int height) : base("Messages", width, height, height + 350)
 		{
             NoNameRoguelike.Core.Systems.MessageLog.FireNewMessage += Message;
 		}
