@@ -34,12 +34,27 @@ namespace NoNameRoguelike.Core.Screen
 
             characterStatusPanel.Position = new Point((int)(width*0.80), 0);
             messageConsole.Position = new Point(0, (int)(height*0.70));
-            inventoryConsole.Position = new Point((int)(width*0.30), (int)(width*0.30));
+            inventoryConsole.Position = new Point((int)(width*0.30)/2, (int)(width*0.30)/2);
 
             Add(characterStatusPanel);
             Add(dungeonViewConsole);
 
+            BaseEntity test_item = new BaseEntity();
+            test_item.NAME = "Test Item";
+            test_item.AddComponent(new Item());
+            test_item.AddComponent(new SpriteAnimation('Y', Color.Red, Color.Yellow));
+
             inventoryConsole.Show();
+            inventoryConsole.inventory = new Inventory();
+            inventoryConsole.inventory.AddItem(test_item);
+
+            inventoryConsole.inventory.AddItem(test_item);
+            inventoryConsole.inventory.AddItem(test_item);
+            inventoryConsole.inventory.AddItem(test_item);
+            inventoryConsole.inventory.AddItem(test_item);
+            inventoryConsole.inventory.AddItem(test_item);
+            inventoryConsole.inventory.AddItem(test_item);
+            inventoryConsole.inventory.AddItem(test_item);
             //TODO: Find a way to init those dynamically.
 
             dungeonViewConsole.Player.GetComponent<Actor>(ComponentType.Actor).Stats.StatsChanged += characterStatusPanel.StatusChanged;
@@ -50,6 +65,17 @@ namespace NoNameRoguelike.Core.Screen
 
         public override bool ProcessKeyboard(KeyboardInfo info)
         {
+            if(info.KeysPressed.Contains(AsciiKey.Get(Microsoft.Xna.Framework.Input.Keys.I)))
+            {
+                if(!inventoryConsole.IsVisible)
+                {
+                    inventoryConsole.Show();
+                }
+                else
+                {
+                    inventoryConsole.Hide();
+                }
+            }
             return dungeonViewConsole.ProcessKeyboard(info);
         }
         public override bool ProcessMouse(MouseInfo info)
