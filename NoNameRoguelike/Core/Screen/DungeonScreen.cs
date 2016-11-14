@@ -27,7 +27,7 @@ namespace NoNameRoguelike.Core.Screen
 
             messageConsole = new MessageConsole((int)(width), (int)(height*0.30));
             Add(messageConsole);
-            dungeonViewConsole = new DungeonViewConsole((int)(width*0.80), (int)(height*0.70), 30, 30);
+            dungeonViewConsole = new DungeonViewConsole((int)(width*0.80), (int)(height*0.70), 300, 300);
             characterStatusPanel = new CharacterStatusPanel((int)(width*0.20), (int)(height*0.70));
             inventoryConsole = new InventoryConsole((int)(width*0.30), (int)(height*0.60));
 
@@ -49,14 +49,10 @@ namespace NoNameRoguelike.Core.Screen
             test_eq.AddComponent(new SpriteAnimation('/', Color.Green, Color.Black));
 
             inventoryConsole.Hide();
-            inventoryConsole.inventory = new Inventory();
-            inventoryConsole.inventory.AddItem(test_item);
+            inventoryConsole.inventory = dungeonViewConsole.Player.GetComponent<ConsoleScreenGameHelper.Core.Entity.Components.Inventory>(ComponentType.Inventory);
+            dungeonViewConsole.mapLevel.ItemContainer.Add(test_item);
+            dungeonViewConsole.mapLevel.ItemContainer.Add(test_eq);
 
-            inventoryConsole.inventory.AddItem(test_item);
-            inventoryConsole.inventory.AddItem(test_item);
-            inventoryConsole.inventory.AddItem(test_item);
-            inventoryConsole.inventory.AddItem(test_item);
-            inventoryConsole.inventory.AddItem(test_item);
             inventoryConsole.inventory.AddItem(test_item);
             inventoryConsole.inventory.AddItem(test_eq);
             //TODO: Find a way to init those dynamically.

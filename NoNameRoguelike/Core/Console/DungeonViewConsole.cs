@@ -32,6 +32,7 @@ namespace NoNameRoguelike.Core.Console
             inputManager.AddButton(Keys.Left, Input.West);
             inputManager.AddButton(Keys.Right, Input.East);
             inputManager.AddButton(Keys.OemPeriod, Input.None);
+            inputManager.AddButton(Keys.OemComma, Input.Pickup);
 
             inputManager.AddButton(Keys.NumPad2, Input.South);
             inputManager.AddButton(Keys.NumPad8, Input.North);
@@ -47,6 +48,7 @@ namespace NoNameRoguelike.Core.Console
             playerEntity = new BaseEntity(GameWorld.MessageLog);
             playerEntity.NAME = "Player";
             playerEntity.AddComponent(new PlayerInput());
+            playerEntity.AddComponent(new Inventory());
 			playerEntity.AddComponent(new Actor(Color.Orange, Color.Black, mapLevel, 10, 10, 10, 10, '@'));
             playerEntity.AddComponent(new FOV());
             mapLevel.CameraFollow = playerEntity;

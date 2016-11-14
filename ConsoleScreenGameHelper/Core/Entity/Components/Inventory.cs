@@ -1,4 +1,6 @@
 ﻿using System;
+using SadConsole;
+using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
 namespace ConsoleScreenGameHelper.Core.Entity.Components
@@ -49,6 +51,45 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
             {
                 inventory.Remove(k);
             }
+        }
+
+        public void PickupItem()
+        {
+            Point inventoryUserPosition = GetParent().GetComponent<SpriteAnimation>(ComponentType.SpriteAnimation).Position;
+            var a = GetParent().GetComponent<Actor>(ComponentType.Actor);
+            if(a != null)
+            {
+                var i = a.Map.GetItemAt(inventoryUserPosition.X, inventoryUserPosition.Y);
+                if(i != null)
+                {
+                    AddItem(i);
+                    i.GetComponent<SpriteAnimation>(ComponentType.SpriteAnimation).IsVisible = false;
+                    i.GetComponent<SpriteAnimation>(ComponentType.SpriteAnimation).Position = new Point(0, 0);
+                    if(GetParent().logger != null)
+                    {
+                        ColoredString str = new ColoredString("Item : ");
+                        str += string.Format("{0}", i.NAME).CreateColored(Color.Cyan);
+                        str += ", Picked up.".CreateColored(Color.White);
+                        GetParent().logger.Write(str);
+                    }
+
+                }
+                else
+                {
+                    if(GetParent().logger != null)
+                    {
+                        GetParent().logger.Write("There is no item to pick up.");
+                    }
+                }
+            }
+        }
+
+        public void DropItem(BaseEntity be)
+        {
+            RemoveItem(be);
+            Point inventoryUserPosition = GetParent().GetComponent<SpriteAnimation>(ComponentType.SpriteAnimation).Position;
+            be.GetComponent<SpriteAnimation>(ComponentType.SpriteAnimation).IsVisible = true;
+            be.GetComponent<SpriteAnimation>(ComponentType.SpriteAnimation).Position = new Point(inventoryUserPosition.X, inventoryUserPosition.Y);
         }
 
         public override void FireEvent(object sender, EventArgs e)

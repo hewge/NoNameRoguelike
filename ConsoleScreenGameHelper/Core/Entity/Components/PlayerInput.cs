@@ -47,6 +47,9 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
                 case Input.None:
                     GetParent().FireEvent(this, new NewMoveEventArgs(Direction.None));
                     break;
+                case Input.Pickup:
+                    GetParent().GetComponent<Components.Inventory>(ComponentType.Inventory).PickupItem();
+                    break;
             }
         }
 

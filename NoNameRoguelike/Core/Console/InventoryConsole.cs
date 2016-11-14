@@ -14,6 +14,8 @@ namespace NoNameRoguelike.Core.Console
 	public class InventoryConsole : Window
 	{
         public Inventory inventory { get; set; }
+        public BaseEntity inventoryUser { get{ return inventory.GetParent(); } }
+        private bool DropMode = false;
 		public InventoryConsole(int width, int height) : base(width, height)
 		{
             Title = "Inventory";
@@ -29,23 +31,35 @@ namespace NoNameRoguelike.Core.Console
             //TODO: Have this use Colored strings and make it so an item of type Equipment is equippable.(or unequippable)
             if(this.IsVisible)
             {
+                if(info.KeysPressed.Contains(AsciiKey.Get(Keys.J)))
+                {
+                    DropMode = DropMode == true ? false : true;
+                }
                 foreach(var k in inventory.inventory)
                 {
                     if(info.KeysPressed.Contains(AsciiKey.Get((Keys)((int)char.ToUpper(k.Key)))))
                     {
-                        switch(k.Value.GetComponent<Item>(ComponentType.Item).ItemType)
+                        if(DropMode)
                         {
-                            case ItemType.Food:
-                                SadConsole.Consoles.Window.Prompt(GetItemMessage(k), "Eat", "Cancel", food_prompt);
-                                break;
-                            case ItemType.Equipment:
-                                SadConsole.Consoles.Window.Prompt(GetItemMessage(k), "Equip/UnEquip", "Cancel", equipment_prompt);
-                                break;
-                            case ItemType.Potion:
-                                SadConsole.Consoles.Window.Prompt(GetItemMessage(k), "Drink", "Cancel", potion_prompt);
-                                break;
-                            default:
-                                break;
+                            SadConsole.Consoles.Window.Prompt(GetItemMessage(k), "Drop", "Cancel", (r) => { drop_prompt(r, k.Value); });
+                        }
+                        else
+                        {
+                            switch(k.Value.GetComponent<Item>(ComponentType.Item).ItemType)
+                            {
+                                case ItemType.Food:
+                                    SadConsole.Consoles.Window.Prompt(GetItemMessage(k), "Eat", "Cancel", (r) => { food_prompt(r, k.Value); });
+                                    break;
+                                case ItemType.Equipment:
+                                    SadConsole.Consoles.Window.Prompt(GetItemMessage(k), "Equip/UnEquip", "Cancel", (r) => { food_prompt(r, k.Value); });
+                                    break;
+                                case ItemType.Potion:
+                                    SadConsole.Consoles.Window.Prompt(GetItemMessage(k), "Drink", "Cancel", (r) => { potion_prompt(r, k.Value); });
+                                    break;
+                                default:
+                                    break;
+
+                            }
 
                         }
                     }
@@ -54,16 +68,61 @@ namespace NoNameRoguelike.Core.Console
             return false;
 
         }
-        private void food_prompt(bool result)
+        private void food_prompt(bool result, BaseEntity be)
         {
+            if(result)
+            {
+                // DO IT
+
+            }
+            else
+            {
+                // Dont Do IT
+
+            }
+
         }
 
-        private void equipment_prompt(bool result)
+        private void equipment_prompt(bool result, BaseEntity be)
         {
+            if(result)
+            {
+                // DO IT
+
+            }
+            else
+            {
+                // Dont Do IT
+
+            }
         }
 
-        private void potion_prompt(bool result)
+        private void potion_prompt(bool result, BaseEntity be)
         {
+            if(result)
+            {
+                // DO IT
+
+            }
+            else
+            {
+                // Dont Do IT
+
+            }
+
+        }
+
+        private void drop_prompt(bool result, BaseEntity be)
+        {
+            if(result)
+            {
+                System.Console.WriteLine("Drop Item {0}", be.NAME);
+                inventory.DropItem(be);
+            }
+            else
+            {
+                System.Console.WriteLine("Do Not Drop Item {0}", be.NAME);
+            }
         }
 
         private ColoredString GetItemMessage(KeyValuePair<char, BaseEntity> de)
@@ -82,6 +141,14 @@ namespace NoNameRoguelike.Core.Console
 
         public override void Render()
         {
+            if(DropMode)
+            {
+                this.Title = "Inventory - DropMode";
+            }
+            else
+            {
+                this.Title = "Inventory";
+            }
             if(inventory != null)
             {
                 this.VirtualCursor.Position = new Point(0, 1);

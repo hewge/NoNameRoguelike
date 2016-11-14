@@ -14,6 +14,7 @@ namespace ConsoleScreenGameHelper.Core.Map
 
         public MapData MapData { get; set; }
         public EntityContainer EntityContainer { get; set; }
+        public ItemContainer ItemContainer { get; set; }
 
         public readonly int Width;
         public readonly int Height;
@@ -34,9 +35,15 @@ namespace ConsoleScreenGameHelper.Core.Map
 
 
             EntityContainer = new EntityContainer();
+            ItemContainer = new ItemContainer();
             MapData = mapGenerator.CreateMap();
 
 		}
+
+        public BaseEntity GetItemAt(int x, int y)
+        {
+            return ItemContainer.FirstOrDefault(e => e.GetComponent<SpriteAnimation>(ComponentType.SpriteAnimation).Position.X == x && e.GetComponent<SpriteAnimation>(ComponentType.SpriteAnimation).Position.Y == y);
+        }
 
         public BaseEntity GetEntityAt(int x, int y)
         {
@@ -50,11 +57,26 @@ namespace ConsoleScreenGameHelper.Core.Map
                 MapData.ComputeFOV(CameraFollow);
             }
 
+            ItemContainer.Update();
             EntityContainer.Update();
         }
 
         public void Render()
         {
+            foreach(var be in ItemContainer)
+            {
+                var sa = be.GetComponent<SpriteAnimation>(ComponentType.SpriteAnimation);
+                if(MapData.FieldOfView.IsInFov(sa.Position.X, sa.Position.Y))
+                {
+                    be.GetComponent<SpriteAnimation>(ComponentType.SpriteAnimation).IsVisible = true;
+                    be.Render();
+                }
+                else
+                {
+                    be.GetComponent<SpriteAnimation>(ComponentType.SpriteAnimation).IsVisible = false;
+                }
+
+            }
             foreach(var be in EntityContainer)
             {
                 var sa = be.GetComponent<SpriteAnimation>(ComponentType.SpriteAnimation);

@@ -4,7 +4,9 @@ namespace ConsoleScreenGameHelper.Enum
 {
 	public enum Input
 	{
+        //input commands
         None,
+        Pickup,
         North,
         South,
         West,
@@ -13,6 +15,7 @@ namespace ConsoleScreenGameHelper.Enum
         NorthEast,
         SouthWest,
         SouthEast
+
 	}
 }
 
