@@ -102,11 +102,12 @@
     <Compile Include="Program.cs" />
     <Compile Include="Core\Screen\TitleScreen.cs" />
     <Compile Include="Core\Console\CharacterStatusPanel.cs" />
-    <Compile Include="Core\Console\MessageConsole.cs" />
     <Compile Include="Core\Screen\DungeonScreen.cs" />
     <Compile Include="Core\Console\DungeonViewConsole.cs" />
     <Compile Include="GameWorld.cs" />
     <Compile Include="Core\Systems\MessageLog.cs" />
     <Compile Include="Core\Console\InventoryConsole.cs" />
+    <Compile Include="Core\Console\CharacterStatusConsole.cs" />
+    <Compile Include="Core\Console\MessagePanel.cs" />
   </ItemGroup>
 </Project>

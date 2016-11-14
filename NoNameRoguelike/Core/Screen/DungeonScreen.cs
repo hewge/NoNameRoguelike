@@ -16,8 +16,9 @@ namespace NoNameRoguelike.Core.Screen
 	{
         public DungeonViewConsole dungeonViewConsole;
         public CharacterStatusPanel characterStatusPanel;
-        public MessageConsole messageConsole;
+        public MessagePanel messageConsole;
         public InventoryConsole inventoryConsole;
+        public CharacterStatusConsole characterStatusConsole;
 
 		public DungeonScreen(Game gameRef, GameStateManager manager) : base(gameRef, manager)
 		{
@@ -25,16 +26,18 @@ namespace NoNameRoguelike.Core.Screen
             int width = 80;
             int height = 45;
 
-            messageConsole = new MessageConsole((int)(width), (int)(height*0.30));
+            messageConsole = new MessagePanel((int)(width), (int)(height*0.30));
             Add(messageConsole);
-            dungeonViewConsole = new DungeonViewConsole((int)(width*0.80), (int)(height*0.70), 300, 300);
+            dungeonViewConsole = new DungeonViewConsole((int)(width*0.80), (int)(height*0.70), 30, 30);
             characterStatusPanel = new CharacterStatusPanel((int)(width*0.20), (int)(height*0.70));
             inventoryConsole = new InventoryConsole((int)(width*0.30), (int)(height*0.60));
+            characterStatusConsole = new CharacterStatusConsole((int)(width*0.30), (int)(height*0.60));
 
 
             characterStatusPanel.Position = new Point((int)(width*0.80), 0);
             messageConsole.Position = new Point(0, (int)(height*0.70));
             inventoryConsole.Position = new Point((int)(width*0.80)/2, (int)(width*0.30)/2); 
+            characterStatusConsole.Position = new Point((int)(width*0.10), (int)(width*0.30)/2);
             Add(characterStatusPanel);
             Add(dungeonViewConsole);
 
@@ -49,7 +52,9 @@ namespace NoNameRoguelike.Core.Screen
             test_eq.AddComponent(new SpriteAnimation('/', Color.Green, Color.Black));
 
             inventoryConsole.Hide();
-            inventoryConsole.inventory = dungeonViewConsole.Player.GetComponent<ConsoleScreenGameHelper.Core.Entity.Components.Inventory>(ComponentType.Inventory);
+            characterStatusConsole.Hide();
+            inventoryConsole.inventoryUser = dungeonViewConsole.Player;
+            characterStatusConsole.StatusConsoleUser = dungeonViewConsole.Player;
             dungeonViewConsole.mapLevel.ItemContainer.Add(test_item);
             dungeonViewConsole.mapLevel.ItemContainer.Add(test_eq);
 
@@ -76,7 +81,19 @@ namespace NoNameRoguelike.Core.Screen
                     inventoryConsole.Hide();
                 }
             }
-            if(!inventoryConsole.ProcessKeyboard(info))
+            if(info.KeysPressed.Contains(AsciiKey.Get(Microsoft.Xna.Framework.Input.Keys.P)))
+            {
+                if(!characterStatusConsole.IsVisible)
+                {
+                    characterStatusConsole.Show();
+                }
+                else
+                {
+                    characterStatusConsole.Hide();
+                }
+            }
+
+            if(!characterStatusConsole.ProcessKeyboard(info) || !inventoryConsole.ProcessKeyboard(info))
             {
                 return dungeonViewConsole.ProcessKeyboard(info);
             }
@@ -84,7 +101,7 @@ namespace NoNameRoguelike.Core.Screen
         }
         public override bool ProcessMouse(MouseInfo info)
         {
-            if(!inventoryConsole.ProcessMouse(info))
+            if(!characterStatusConsole.ProcessMouse(info) || !inventoryConsole.ProcessMouse(info))
             {
                 return base.ProcessMouse(info);
             }
@@ -94,11 +111,13 @@ namespace NoNameRoguelike.Core.Screen
         {
             base.Update();
             inventoryConsole.Update();
+            characterStatusConsole.Update();
         }
         public override void Render()
         {
             base.Render();
             inventoryConsole.Render();
+            characterStatusConsole.Render();
         }
 	}
 }

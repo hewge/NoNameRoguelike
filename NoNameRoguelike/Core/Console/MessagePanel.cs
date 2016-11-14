@@ -4,10 +4,10 @@ using SadConsole;
 
 namespace NoNameRoguelike.Core.Console
 {
-	public class MessageConsole : BorderedScrollingConsole
+	public class MessagePanel : BorderedScrollingConsole
 	{
 
-		public MessageConsole(int width, int height) : base("Messages", width, height, height + 350)
+		public MessagePanel(int width, int height) : base("Messages", width, height, height + 350)
 		{
             NoNameRoguelike.Core.Systems.MessageLog.FireNewMessage += Message;
 		}

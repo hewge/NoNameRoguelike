@@ -13,8 +13,8 @@ namespace NoNameRoguelike.Core.Console
 {
 	public class InventoryConsole : Window
 	{
-        public Inventory inventory { get; set; }
-        public BaseEntity inventoryUser { get{ return inventory.GetParent(); } }
+        public Inventory inventory { get{ return inventoryUser.GetComponent<Inventory>(ComponentType.Inventory); } }
+        public BaseEntity inventoryUser { get; set;}
         private bool DropMode = false;
 		public InventoryConsole(int width, int height) : base(width, height)
 		{
