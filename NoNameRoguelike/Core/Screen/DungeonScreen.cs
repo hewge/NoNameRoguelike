@@ -2,6 +2,7 @@
 using SadConsole;
 using SadConsole.Input;
 using ConsoleScreenGameHelper.Core.Entity;
+using ConsoleScreenGameHelper.Enum;
 using ConsoleScreenGameHelper.Core.Entity.Components;
 using ConsoleScreenGameHelper.Core.Screen;
 using ConsoleScreenGameHelper.GameComponent;
@@ -28,23 +29,22 @@ namespace NoNameRoguelike.Core.Screen
             Add(messageConsole);
             dungeonViewConsole = new DungeonViewConsole((int)(width*0.80), (int)(height*0.70), 30, 30);
             characterStatusPanel = new CharacterStatusPanel((int)(width*0.20), (int)(height*0.70));
-            inventoryConsole = new InventoryConsole((int)(width*0.60), (int)(height*0.60));
+            inventoryConsole = new InventoryConsole((int)(width*0.30), (int)(height*0.60));
 
 
 
             characterStatusPanel.Position = new Point((int)(width*0.80), 0);
             messageConsole.Position = new Point(0, (int)(height*0.70));
-            inventoryConsole.Position = new Point((int)(width*0.30)/2, (int)(width*0.30)/2);
-
+            inventoryConsole.Position = new Point((int)(width*0.80)/2, (int)(width*0.30)/2); 
             Add(characterStatusPanel);
             Add(dungeonViewConsole);
 
             BaseEntity test_item = new BaseEntity();
             test_item.NAME = "Test Item";
-            test_item.AddComponent(new Item());
+            test_item.AddComponent(new Item(ItemType.Food));
             test_item.AddComponent(new SpriteAnimation('Y', Color.Red, Color.Yellow));
 
-            inventoryConsole.Show();
+            inventoryConsole.Hide();
             inventoryConsole.inventory = new Inventory();
             inventoryConsole.inventory.AddItem(test_item);
 
@@ -76,7 +76,11 @@ namespace NoNameRoguelike.Core.Screen
                     inventoryConsole.Hide();
                 }
             }
-            return dungeonViewConsole.ProcessKeyboard(info);
+            if(!inventoryConsole.ProcessKeyboard(info))
+            {
+                return dungeonViewConsole.ProcessKeyboard(info);
+            }
+            return true;
         }
         public override bool ProcessMouse(MouseInfo info)
         {

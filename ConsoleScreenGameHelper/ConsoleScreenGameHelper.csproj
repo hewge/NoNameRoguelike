@@ -127,6 +127,7 @@
     <Compile Include="Core\Entity\Components\Item.cs" />
     <Compile Include="Interface\IEquipment.cs" />
     <Compile Include="Core\Entity\AI\Behaviour\Roam.cs" />
+    <Compile Include="Enum\ItemType.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

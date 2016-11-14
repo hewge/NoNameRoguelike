@@ -22,9 +22,6 @@ namespace NoNameRoguelike.Core.Console
 
 		public DungeonViewConsole(int viewWidth, int viewHeight, int mapWidth, int mapHeight) : base(mapWidth, mapHeight)
 		{
-            CanFocus = true;
-            MouseCanFocus = true;
-
             RogueSharp.MapCreation.IMapCreationStrategy<RogueSharp.Map> ms = (RogueSharp.MapCreation.IMapCreationStrategy<RogueSharp.Map>)new RogueSharp.MapCreation.RandomRoomsMapCreationStrategy<RogueSharp.Map>(mapWidth, mapHeight, 100, 13, 7);
 
             mapLevel = new MapLevel(mapWidth, mapHeight, ms, TextSurface);
