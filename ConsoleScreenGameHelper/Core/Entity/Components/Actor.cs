@@ -1,4 +1,5 @@
 ﻿using System;
+using SadConsole;
 using ConsoleScreenGameHelper.Interface;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
@@ -69,7 +70,10 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
         {
             if(GetParent().logger != null)
             {
-                GetParent().logger.Write(string.Format("{0}, Has Died.", GetParent().NAME));
+                ColoredString  str = new ColoredString(string.Format("{0}, Has ", GetParent().NAME));
+                str+="Died".CreateColored(Color.Red);
+                str+=".".CreateColored(Color.White);
+                GetParent().logger.Write(str);
             }
             Map.MapData.Map.SetCellProperties(Sprite.Position.X, Sprite.Position.Y, true, true);
             Map.EntityContainer.Remove(GetParent());

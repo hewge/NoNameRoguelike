@@ -1,4 +1,5 @@
 ﻿using System;
+using SadConsole;
 using System.Collections;
 using ConsoleScreenGameHelper.EventHandler;
 using ConsoleScreenGameHelper.Interface;
@@ -21,13 +22,19 @@ namespace NoNameRoguelike.Core.Systems
             DebugMessages = debugMessages;
         }
 
-        public void Write(string message)
+        public void Write(ColoredString message)
         {
-            _lines.Enqueue(message);
+            _lines.Enqueue(message.ToString());
             if(_fireNewMessage != null)
             {
                 _fireNewMessage(this, new NewMessageEventArgs(message));
             }
+
+        }
+
+        public void Write(string message)
+        {
+            this.Write(new ColoredString(message));
         }
         public void Debug(string message)
         {

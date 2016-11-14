@@ -1,4 +1,6 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
+using SadConsole;
 using RogueSharp.DiceNotation;
 using ConsoleScreenGameHelper.EventHandler;
 using ConsoleScreenGameHelper.Core.Entity;
@@ -60,7 +62,17 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
                 //Take Damage , by first finding out if any "components" want to modify it first.
                 if(GetParent().logger != null)
                 {
-                    GetParent().logger.Write(string.Format("{0}, Blocks {1:0.#}% of incoming damage, {2} damage is Inflicted.", GetParent().NAME, blockPercent*100, (int)dmg));
+                    ColoredString str = new ColoredString(string.Format("{0}, ", GetParent().NAME));
+                    str+="Blocks".CreateColored(Color.Green);
+                    str+=string.Format(" {0:0.#}%", blockPercent*100).CreateColored(Color.Blue);
+                    str+=" of incoming ".CreateColored(Color.White);
+                    str+="damage".CreateColored(Color.Red);
+                    str+=", ".CreateColored(Color.White);
+                    str+=string.Format("{0}", (int)dmg).CreateColored(Color.DarkRed);
+                    str+=" damage".CreateColored(Color.Red);
+                    str+=" is Inflicted.".CreateColored(Color.White);
+
+                    GetParent().logger.Write(str);
                 }
                 Stats.Health -= (int)dmg;
             }

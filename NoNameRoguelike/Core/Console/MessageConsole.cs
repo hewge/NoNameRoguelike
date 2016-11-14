@@ -24,7 +24,7 @@ namespace NoNameRoguelike.Core.Console
 
         public void PrintMessage(ColoredString text)
         {
-            VirtualCursor.Print(text).CarriageReturn();
+            VirtualCursor.Print(text).NewLine();
         }
         public override void Render()
         {

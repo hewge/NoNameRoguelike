@@ -1,4 +1,6 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
+using SadConsole;
 using RogueSharp.DiceNotation;
 using ConsoleScreenGameHelper.EventHandler;
 using ConsoleScreenGameHelper.Core.Entity;
@@ -58,7 +60,14 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
                 {
                     if(GetParent().logger != null)
                     {
-                        GetParent().logger.Write(string.Format("{0}, Attacks {1}, for {2} damage.", GetParent().NAME, other.NAME, (int)dmg));
+                        ColoredString str = new ColoredString(string.Format("{0}, ", GetParent().NAME));
+                        str+="Attacks".CreateColored(Color.Red);
+                        str+=string.Format(" {0} for", other.NAME).CreateColored(Color.White);
+                        str+=string.Format(" {0} ", (int)dmg).CreateColored(Color.DarkRed);
+                        str+="damage".CreateColored(Color.Red);
+                        str+=".".CreateColored(Color.White);
+
+                        GetParent().logger.Write(str);
                     }
 
                     other.FireEvent(this, new NewDamageEventArgs((e as NewAttackEventArgs).Damage));

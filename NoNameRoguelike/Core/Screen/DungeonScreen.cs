@@ -32,7 +32,6 @@ namespace NoNameRoguelike.Core.Screen
             inventoryConsole = new InventoryConsole((int)(width*0.30), (int)(height*0.60));
 
 
-
             characterStatusPanel.Position = new Point((int)(width*0.80), 0);
             messageConsole.Position = new Point(0, (int)(height*0.70));
             inventoryConsole.Position = new Point((int)(width*0.80)/2, (int)(width*0.30)/2); 
@@ -44,6 +43,11 @@ namespace NoNameRoguelike.Core.Screen
             test_item.AddComponent(new Item(ItemType.Food));
             test_item.AddComponent(new SpriteAnimation('Y', Color.Red, Color.Yellow));
 
+            BaseEntity test_eq = new BaseEntity();
+            test_eq.NAME = "Test Sword";
+            test_eq.AddComponent(new Item(ItemType.Equipment, "A Really Sharp Sword."));
+            test_eq.AddComponent(new SpriteAnimation('/', Color.Green, Color.Black));
+
             inventoryConsole.Hide();
             inventoryConsole.inventory = new Inventory();
             inventoryConsole.inventory.AddItem(test_item);
@@ -54,7 +58,7 @@ namespace NoNameRoguelike.Core.Screen
             inventoryConsole.inventory.AddItem(test_item);
             inventoryConsole.inventory.AddItem(test_item);
             inventoryConsole.inventory.AddItem(test_item);
-            inventoryConsole.inventory.AddItem(test_item);
+            inventoryConsole.inventory.AddItem(test_eq);
             //TODO: Find a way to init those dynamically.
 
             dungeonViewConsole.Player.GetComponent<Actor>(ComponentType.Actor).Stats.StatsChanged += characterStatusPanel.StatusChanged;
