@@ -65,7 +65,7 @@ namespace NoNameRoguelike.Core.Console
                     }
                 }
             }
-            return false;
+            return base.ProcessKeyboard(info);
 
         }
         private void food_prompt(bool result, BaseEntity be)

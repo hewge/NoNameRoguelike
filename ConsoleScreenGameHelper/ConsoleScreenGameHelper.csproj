@@ -77,6 +77,7 @@
     <Folder Include="Core\Map\" />
     <Folder Include="Core\Entity\AI\" />
     <Folder Include="Core\Entity\AI\Behaviour\" />
+    <Folder Include="Core\Console\Panel\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameComponent\GameStateManager.cs" />
@@ -129,6 +130,7 @@
     <Compile Include="Core\Entity\AI\Behaviour\Roam.cs" />
     <Compile Include="Enum\ItemType.cs" />
     <Compile Include="Core\Entity\ItemContainer.cs" />
+    <Compile Include="Core\Console\Panel\StatusPanel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

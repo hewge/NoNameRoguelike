@@ -63,8 +63,10 @@ namespace NoNameRoguelike.Core.Screen
             //TODO: Find a way to init those dynamically.
 
             dungeonViewConsole.Player.GetComponent<Actor>(ComponentType.Actor).Stats.StatsChanged += characterStatusPanel.StatusChanged;
+            dungeonViewConsole.Player.GetComponent<Actor>(ComponentType.Actor).Stats.StatsChanged += characterStatusConsole.StatusChanged;
             dungeonViewConsole.mapLevel.EntityContainer[0].GetComponent<Actor>(ComponentType.Actor).Stats.StatsChanged += characterStatusPanel.actor_StatusChanged;
             characterStatusPanel.CharacterName = dungeonViewConsole.Player.NAME;
+
 
 		}
 
@@ -93,7 +95,7 @@ namespace NoNameRoguelike.Core.Screen
                 }
             }
 
-            if(!characterStatusConsole.ProcessKeyboard(info) || !inventoryConsole.ProcessKeyboard(info))
+            if(!characterStatusConsole.ProcessKeyboard(info) && !inventoryConsole.ProcessKeyboard(info))
             {
                 return dungeonViewConsole.ProcessKeyboard(info);
             }
@@ -101,7 +103,7 @@ namespace NoNameRoguelike.Core.Screen
         }
         public override bool ProcessMouse(MouseInfo info)
         {
-            if(!characterStatusConsole.ProcessMouse(info) || !inventoryConsole.ProcessMouse(info))
+            if(!characterStatusConsole.ProcessMouse(info) && !inventoryConsole.ProcessMouse(info))
             {
                 return base.ProcessMouse(info);
             }

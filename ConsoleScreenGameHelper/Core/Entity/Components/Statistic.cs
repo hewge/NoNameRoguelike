@@ -45,33 +45,33 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components {
 
 
         [JsonProperty]
-        public int Strenght { get{ return _strenght; } set{ _strenght = value; } }
+        public int Strenght { get{ return _strenght; } set{ _strenght = value; StatusChanged(); } }
         [JsonProperty]
-        public int Dexterity { get{ return _dexterity; } set{ _dexterity = value; } }
+        public int Dexterity { get{ return _dexterity; } set{ _dexterity = value; StatusChanged(); } }
         [JsonProperty]
-        public int Vitality { get{ return _vitality; } set{ _vitality = value; } }
+        public int Vitality { get{ return _vitality; } set{ _vitality = value; StatusChanged(); } }
         [JsonProperty]
-        public int Intelligence { get{ return _intelligence; } set{ _intelligence = value; } }
+        public int Intelligence { get{ return _intelligence; } set{ _intelligence = value; StatusChanged(); } }
 
 
         [JsonProperty]
-        public int Attack { get{ return _attack;} set{ _attack = value; } }
+        public int Attack { get{ return _attack;} set{ _attack = value; StatusChanged(); } }
         [JsonProperty]
-        public int AttackChance { get{ return _attackChance; } set{ _attackChance = value; } }
+        public int AttackChance { get{ return _attackChance; } set{ _attackChance = value; StatusChanged(); } }
         [JsonProperty]
-        public int Defence { get{ return _defence; } set{ _defence = value; } }
+        public int Defence { get{ return _defence; } set{ _defence = value; StatusChanged(); } }
         [JsonProperty]
-        public int DefenceChance { get{ return _defenceChance; } set{ _defenceChance = value; } }
+        public int DefenceChance { get{ return _defenceChance; } set{ _defenceChance = value; StatusChanged(); } }
 
         [JsonProperty]
-        public int Speed { get{ return _speed;} set{ _speed = value; } }
+        public int Speed { get{ return _speed;} set{ _speed = value; StatusChanged(); } }
         [JsonProperty]
-        public int Awareness { get{ return _awareness; } set{ _awareness = value; } }
+        public int Awareness { get{ return _awareness; } set{ _awareness = value; StatusChanged();  } }
 
         [JsonProperty]
-        public double HealthRegeneration { get{ return _hpRegen; } set{ _hpRegen = value; } }
+        public double HealthRegeneration { get{ return _hpRegen; } set{ _hpRegen = value; StatusChanged(); } }
         [JsonProperty]
-        public double EnergyRegeneration { get{ return _enRegen; } set{ _enRegen = value; } }
+        public double EnergyRegeneration { get{ return _enRegen; } set{ _enRegen = value; StatusChanged(); } }
 
         [JsonProperty]
         public int Health { get{ return _health; } set{ _health = MathHelper.Clamp(value, 0, MaxHealth); StatusChanged(); } }
@@ -200,7 +200,7 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components {
             }
             if(statsChanged != null)
             {
-                statsChanged(this, new StatsChangedEventArgs(Health, MaxHealth, Energy, MaxEnergy, IsInFov));
+                statsChanged(this, new StatsChangedEventArgs(this));
             }
         }
         public override void FireEvent(object sender, EventArgs e)
