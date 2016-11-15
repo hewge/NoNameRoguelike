@@ -1,18 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
+using ConsoleScreenGameHelper.Core.DataContainer;
+using ConsoleScreenGameHelper.Interface;
 using SadConsole;
 using SadConsole.Consoles;
 
 namespace ConsoleScreenGameHelper.Core.Console.Panel
 {
-	public class StatusPanel : TextSurface
+	public class StatusPanel : TextSurface, IStatusPanel
 	{
-		public StatusPanel(KeyValuePair<string, int> nameValue, int width, int height) : base(width, height)
+        SurfaceEditor editor;
+        public BaseStat stat;
+		public StatusPanel(BaseStat bs, int width, int height) : base(width, height)
 		{
-            SurfaceEditor editor = new SurfaceEditor(this);
-            editor.Print(0, 0, nameValue.Key);
-            editor.Print(7, 0, nameValue.Value.ToString());
+            editor = new SurfaceEditor(this);
+            stat = bs;
 		}
+
+        public void Update()
+        {
+            editor.Print(0, 0, stat.Name);
+            editor.Print(14, 0, stat.Value.ToString());
+            if(stat.AltValue != 0)
+            {
+                editor.Print(17, 0, stat.AltValue.ToString());
+            }
+        }
 
 	}
 }

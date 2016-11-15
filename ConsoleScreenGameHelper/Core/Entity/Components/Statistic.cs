@@ -1,4 +1,5 @@
 ﻿using System;
+using ConsoleScreenGameHelper.Core.DataContainer;
 using Microsoft.Xna.Framework;
 using RogueSharp.DiceNotation;
 using ConsoleScreenGameHelper.EventHandler;
@@ -19,68 +20,55 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components {
         double _health_buffer;
         double _energy_buffer;
 
-        //Base Stats.
-        private int _strenght;
-        private int _dexterity;
-        private int _vitality;
-        private int _intelligence;
-
-        //Derrived Stats, from base.
-
-        private int _attack;
-        private int _attackChance;
-        private int _defence;
-        private int _defenceChance;
-        private int _awareness;
-
         private double _hpRegen;
         private double _enRegen;
 
-        private int _speed;
-
-        private int _health;
-        private int _maxHealth;
-        private int _energy;
-        private int _maxEnergy;
-
-
         [JsonProperty]
-        public int Strenght { get{ return _strenght; } set{ _strenght = value; StatusChanged(); } }
+        public BaseStat strenght;
         [JsonProperty]
-        public int Dexterity { get{ return _dexterity; } set{ _dexterity = value; StatusChanged(); } }
+        public BaseStat dexterity;
         [JsonProperty]
-        public int Vitality { get{ return _vitality; } set{ _vitality = value; StatusChanged(); } }
+        public BaseStat vitality;
         [JsonProperty]
-        public int Intelligence { get{ return _intelligence; } set{ _intelligence = value; StatusChanged(); } }
-
+        public BaseStat intelligence;
 
         [JsonProperty]
-        public int Attack { get{ return _attack;} set{ _attack = value; StatusChanged(); } }
+        public BaseStat speed;
         [JsonProperty]
-        public int AttackChance { get{ return _attackChance; } set{ _attackChance = value; StatusChanged(); } }
-        [JsonProperty]
-        public int Defence { get{ return _defence; } set{ _defence = value; StatusChanged(); } }
-        [JsonProperty]
-        public int DefenceChance { get{ return _defenceChance; } set{ _defenceChance = value; StatusChanged(); } }
+        public BaseStat awareness;
 
         [JsonProperty]
-        public int Speed { get{ return _speed;} set{ _speed = value; StatusChanged(); } }
+        public BaseStat attack;
         [JsonProperty]
-        public int Awareness { get{ return _awareness; } set{ _awareness = value; StatusChanged();  } }
+        public BaseStat defence;
+
+        [JsonProperty]
+        public BaseStat energy;
+        [JsonProperty]
+        public BaseStat health;
+
+        public int Health { get{ return health.Value; } set{ health.Value = MathHelper.Clamp(value, 0, health.AltValue); StatusChanged();} }
+        public int MaxHealth { get{ return health.AltValue; } set{ health.AltValue = value;StatusChanged(); } }
+        public int Energy { get{ return energy.Value; } set{ energy.Value = MathHelper.Clamp(value, 0, energy.AltValue);StatusChanged(); } }
+        public int MaxEnergy { get{ return energy.AltValue; } set{ energy.AltValue = value;StatusChanged(); } }
+        public int Strenght { get{ return strenght.Value; } set{ strenght.Value = value;StatusChanged(); } }
+        public int Dexterity { get{ return dexterity.Value; } set{ dexterity.Value = value;StatusChanged(); } }
+        public int Vitality { get{ return vitality.Value; } set{ vitality.Value = value;StatusChanged(); } }
+        public int Intelligence { get{ return intelligence.Value; } set{ intelligence.Value = value;StatusChanged(); } }
+
+        public int Speed { get{ return speed.Value; } set{ speed.Value = value;StatusChanged(); } }
+        public int Awareness { get{ return awareness.Value; } set{ awareness.Value = value;StatusChanged(); } }
+
+        public int Attack { get{ return attack.Value; } set{ attack.Value = value;StatusChanged(); } }
+        public int AttackChance { get{ return attack.AltValue; } set{ attack.AltValue = value;StatusChanged(); } }
+        public int Defence { get{ return defence.Value; } set{ defence.Value = value;StatusChanged(); } }
+        public int DefenceChance { get{ return defence.AltValue; } set{ defence.AltValue = value;StatusChanged(); } }
 
         [JsonProperty]
         public double HealthRegeneration { get{ return _hpRegen; } set{ _hpRegen = value; StatusChanged(); } }
         [JsonProperty]
         public double EnergyRegeneration { get{ return _enRegen; } set{ _enRegen = value; StatusChanged(); } }
 
-        [JsonProperty]
-        public int Health { get{ return _health; } set{ _health = MathHelper.Clamp(value, 0, MaxHealth); StatusChanged(); } }
-        [JsonProperty]
-        public int MaxHealth { get{ return _maxHealth; } set{ _maxHealth = value; StatusChanged(); } }
-        [JsonProperty]
-        public int Energy { get{ return _energy; } set{ _energy = MathHelper.Clamp(value, 0, MaxEnergy); StatusChanged(); } }
-        [JsonProperty]
-        public int MaxEnergy { get{ return _maxEnergy; } set{ _maxEnergy = value; StatusChanged(); } }
         public bool IsInFov { get{ return GetComponent<Actor>(ComponentType.Actor).Map.MapData.FieldOfView.IsInFov(GetComponent<SpriteAnimation>(ComponentType.SpriteAnimation).Position.X, GetComponent<SpriteAnimation>(ComponentType.SpriteAnimation).Position.Y); } set{ StatusChanged(); }}
 
         [JsonProperty]
@@ -92,10 +80,23 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components {
         }
         public Statistic(int str, int dex, int vit, int inte)
         {
-            _strenght = str;
-            _dexterity = dex;
-            _vitality = vit;
-            _intelligence = inte;
+            health = new BaseStat("Health", 1,  100);
+            energy = new BaseStat("Energy", 0, 100);
+
+            strenght = new BaseStat("Strenght", 0, 0);
+            dexterity = new BaseStat("Dexterity", 0, 0);
+            vitality = new BaseStat("Vitality", 0, 0);
+            intelligence = new BaseStat("Intelligence", 0, 0);
+            speed = new BaseStat("Speed", 0, 0);
+
+            awareness = new BaseStat("Awareness", 0, 0);
+            attack = new BaseStat("Attack", 0, 0);
+            defence = new BaseStat("Defence", 0, 0);
+
+            Strenght = str;
+            Dexterity = dex;
+            Vitality = vit;
+            Intelligence = inte;
             if(!calculated)
             {
                 Calculate();
@@ -125,46 +126,46 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components {
             _maxEnergy = _energy;
             */
 
-            for(int i=0; i<_vitality;i++)
+            for(int i=0; i<Vitality;i++)
             {
                 DiceExpression diceExpression = new DiceExpression().Constant(1).Dice(1, 2);
-                _health+=diceExpression.Roll().Value;
-                _energy+=diceExpression.Roll().Value;
+                Health+=diceExpression.Roll().Value;
+                Energy+=diceExpression.Roll().Value;
             }
-            _maxHealth = _health;
-            _maxEnergy = _energy;
+            MaxHealth = Health;
+            MaxEnergy = Energy;
             double atk=0;
-            for(int i=0;i<_strenght;i++)
+            for(int i=0;i<Strenght;i++)
             {
                 DiceExpression diceExpression = new DiceExpression().Dice(1, 2);
                 atk+=diceExpression.Roll().Value/2.0;
             }
-            _attack=(int)atk;
+            Attack=(int)atk;
             double def=0;
-            for(int i=0;i<_strenght;i++)
+            for(int i=0;i<Strenght;i++)
             {
                 DiceExpression diceExpression = new DiceExpression().Dice(1, 2);
                 def+=(diceExpression.Roll().Value/2.0)*0.80;
             }
-            _defence=(int)def;
-            double atk_c = 50.0+(_intelligence*0.3);
-            for(int i=0;i<_dexterity;i++)
+            Defence=(int)def;
+            double atk_c = 50.0+(Intelligence*0.3);
+            for(int i=0;i<Dexterity;i++)
             {
                 DiceExpression diceExpression = new DiceExpression().Dice(2, 3, 1, choose: 1);
                 atk_c+=diceExpression.Roll().Value;
             }
-            _attackChance=(int)atk_c;
-            double def_c = 20.0+(_intelligence*0.3);
-            for(int i=0;i<_dexterity;i++)
+            AttackChance=(int)atk_c;
+            double def_c = 20.0+(Intelligence*0.3);
+            for(int i=0;i<Dexterity;i++)
             {
                 DiceExpression diceExpression = new DiceExpression().Dice(2, 3, 1, choose: 1);
                 def_c+=diceExpression.Roll().Value;
             }
-            _defenceChance=(int)def_c;
-            _awareness=(int)(2.0+(_intelligence*0.3));
-            _speed=(int)(15.0-(_dexterity*0.4));
-            _hpRegen=(_vitality+_intelligence)*0.005;
-            _enRegen=(_vitality+_intelligence)*0.053;
+            DefenceChance=(int)def_c;
+            Awareness=(int)(2.0+(Intelligence*0.3));
+            Speed=(int)(15.0-(Dexterity*0.4));
+            _hpRegen=(Vitality+Intelligence)*0.005;
+            _enRegen=(Vitality+Intelligence)*0.041;
 
             StatusChanged();
             calculated = true;
@@ -172,19 +173,19 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components {
 
         public void Tick()
         {
-            if(_health != _maxHealth)
+            if(Health!=MaxHealth)
                 _health_buffer += (double)HealthRegeneration;
-            if(_energy != _maxEnergy)
+            if(Energy!=MaxEnergy)
                 _energy_buffer += (double)EnergyRegeneration;
 
             while(_health_buffer >= 1)
             {
-                _health += 1;
+                Health += 1;
                 _health_buffer -= 1D;
             }
             while(_energy_buffer >= 1)
             {
-                _energy += 1;
+                Energy += 1;
                 _energy_buffer -= 1D;
             }
 

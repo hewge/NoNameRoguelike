@@ -78,6 +78,7 @@
     <Folder Include="Core\Entity\AI\" />
     <Folder Include="Core\Entity\AI\Behaviour\" />
     <Folder Include="Core\Console\Panel\" />
+    <Folder Include="Core\DataContainer\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameComponent\GameStateManager.cs" />
@@ -131,6 +132,9 @@
     <Compile Include="Enum\ItemType.cs" />
     <Compile Include="Core\Entity\ItemContainer.cs" />
     <Compile Include="Core\Console\Panel\StatusPanel.cs" />
+    <Compile Include="Core\DataContainer\BaseStat.cs" />
+    <Compile Include="Core\Console\Panel\GradientStatusPanel.cs" />
+    <Compile Include="Interface\IStatusPanel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -54,10 +54,10 @@ namespace NoNameRoguelike.Core.Console
         {
             if(e.GetType() == typeof(StatsChangedEventArgs))
             {
-                Health = (e as StatsChangedEventArgs).Health;
-                MaxHealth = (e as StatsChangedEventArgs).MaxHealth;
-                Energy = (e as StatsChangedEventArgs).Energy;
-                MaxEnergy = (e as StatsChangedEventArgs).MaxEnergy;
+                Health = (e as StatsChangedEventArgs).Statistic.Health;
+                MaxHealth = (e as StatsChangedEventArgs).Statistic.MaxHealth;
+                Energy = (e as StatsChangedEventArgs).Statistic.Energy;
+                MaxEnergy = (e as StatsChangedEventArgs).Statistic.MaxEnergy;
             }
         }
 

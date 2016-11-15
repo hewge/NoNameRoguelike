@@ -1,5 +1,7 @@
 ﻿using System;
 using ConsoleScreenGameHelper.EventHandler;
+using ConsoleScreenGameHelper.Interface;
+using ConsoleScreenGameHelper.Core.DataContainer;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using ConsoleScreenGameHelper.Core.Entity.Components;
@@ -15,7 +17,19 @@ namespace NoNameRoguelike.Core.Console
         public BaseEntity StatusConsoleUser { get; set; }
         public Statistic  Statistic { get{ return StatusConsoleUser.GetComponent<Statistic>(ComponentType.Stats); } }
 
-        StatusPanel statusPanel;
+        GradientStatusPanel healthStatusPanel;
+        GradientStatusPanel energyStatusPanel;
+
+        StatusPanel strenghtStatusPanel;
+        StatusPanel dexterityStatusPanel;
+        StatusPanel vitalityStatusPanel;
+        StatusPanel intelligenceStatusPanel;
+        StatusPanel speedStatusPanel;
+        StatusPanel awarenessStatusPanel;
+        StatusPanel attackStatusPanel;
+        StatusPanel defenceStatusPanel;
+
+        List<IStatusPanel> StatusPanels;
 
 		public CharacterStatusConsole(int width, int height) : base(width, height)
 		{
@@ -26,13 +40,53 @@ namespace NoNameRoguelike.Core.Console
             CanFocus = false;
             MouseCanFocus = false;
 
-            statusPanel = new StatusPanel(new KeyValuePair<string, int>("Hej", 10), 10, 10);
+            StatusPanels = new List<IStatusPanel>();
+
+            healthStatusPanel = new GradientStatusPanel(null, 21, 2, Color.Red, Color.GreenYellow);
+            energyStatusPanel = new GradientStatusPanel(null, 21, 2, Color.BlueViolet, Color.GreenYellow);
+
+            strenghtStatusPanel = new StatusPanel(null, 21, 1);
+            dexterityStatusPanel = new StatusPanel(null, 21, 1);
+            vitalityStatusPanel = new StatusPanel(null, 21, 1);
+            intelligenceStatusPanel = new StatusPanel(null, 21, 1);
+
+            speedStatusPanel = new StatusPanel(null, 21, 1);
+            awarenessStatusPanel = new StatusPanel(null, 21, 1);
+
+            attackStatusPanel = new StatusPanel(null, 21, 1);
+            defenceStatusPanel = new StatusPanel(null, 21, 1);
+
+            StatusPanels.Add(healthStatusPanel);
+            StatusPanels.Add(energyStatusPanel);
+
+            StatusPanels.Add(strenghtStatusPanel);
+            StatusPanels.Add(dexterityStatusPanel);
+            StatusPanels.Add(vitalityStatusPanel);
+            StatusPanels.Add(intelligenceStatusPanel);
+            StatusPanels.Add(speedStatusPanel);
+            StatusPanels.Add(awarenessStatusPanel);
+            StatusPanels.Add(attackStatusPanel);
+            StatusPanels.Add(defenceStatusPanel);
 		}
 
         public void StatusChanged(object sender, EventArgs e)
         {
             if(e.GetType() == typeof(StatsChangedEventArgs))
             {
+                healthStatusPanel.stat = (e as StatsChangedEventArgs).Statistic.health;
+                energyStatusPanel.stat = (e as StatsChangedEventArgs).Statistic.energy;
+                strenghtStatusPanel.stat = (e as StatsChangedEventArgs).Statistic.strenght;
+                dexterityStatusPanel.stat = (e as StatsChangedEventArgs).Statistic.dexterity;
+                vitalityStatusPanel.stat = (e as StatsChangedEventArgs).Statistic.vitality;
+                intelligenceStatusPanel.stat = (e as StatsChangedEventArgs).Statistic.intelligence;
+                speedStatusPanel.stat = (e as StatsChangedEventArgs).Statistic.speed;
+                awarenessStatusPanel.stat = (e as StatsChangedEventArgs).Statistic.awareness;
+                attackStatusPanel.stat = (e as StatsChangedEventArgs).Statistic.attack;
+                defenceStatusPanel.stat = (e as StatsChangedEventArgs).Statistic.defence;
+                foreach(var sp in StatusPanels)
+                {
+                    sp.Update();
+                }
 
             }
         }
@@ -46,7 +100,12 @@ namespace NoNameRoguelike.Core.Console
             base.Render();
             if(this.IsVisible == true)
             {
-                Renderer.Render(statusPanel, this.Position + new Point(3, 3));
+                int counter = 2;
+                foreach(var sp in StatusPanels)
+                {
+                    Renderer.Render((ITextSurfaceRendered)sp, this.Position + new Point(2, counter));
+                    counter+=2;
+                }
             }
         }
 	}
