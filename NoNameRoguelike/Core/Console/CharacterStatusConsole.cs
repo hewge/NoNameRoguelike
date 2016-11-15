@@ -43,7 +43,7 @@ namespace NoNameRoguelike.Core.Console
             StatusPanels = new List<IStatusPanel>();
 
             healthStatusPanel = new GradientStatusPanel(null, 21, 2, Color.Red, Color.GreenYellow);
-            energyStatusPanel = new GradientStatusPanel(null, 21, 2, Color.BlueViolet, Color.GreenYellow);
+            energyStatusPanel = new GradientStatusPanel(null, 21, 2, Color.Blue, Color.GreenYellow);
 
             strenghtStatusPanel = new StatusPanel(null, 21, 1);
             dexterityStatusPanel = new StatusPanel(null, 21, 1);
@@ -89,10 +89,6 @@ namespace NoNameRoguelike.Core.Console
                 }
 
             }
-        }
-
-        private void RedrawPanel()
-        {
         }
 
         public override void Render()

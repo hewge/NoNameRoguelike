@@ -1,8 +1,11 @@
 ﻿using System;
+using SadConsole.Consoles;
+using ConsoleScreenGameHelper.Core.Console.Panel;
 using System.Collections.Generic;
 using ConsoleScreenGameHelper.Core.Entity;
 using ConsoleScreenGameHelper.Core.Console;
 using ConsoleScreenGameHelper.Core.Entity.Components;
+using ConsoleScreenGameHelper.Core.DataContainer;
 using ConsoleScreenGameHelper.EventHandler;
 using Microsoft.Xna.Framework;
 using MathHelper = Microsoft.Xna.Framework.MathHelper;
@@ -13,6 +16,8 @@ namespace NoNameRoguelike.Core.Console
     //TODO: Refactor this class,, should be able to do "Character status ", in a better way.
 	public class CharacterStatusPanel : BorderedConsole
 	{
+        GradientStatusPanel healthStatusPanel;
+        GradientStatusPanel energyStatusPanel;
         private string _characterName;
         private int _health;
         private int _maxHealth;
@@ -48,6 +53,8 @@ namespace NoNameRoguelike.Core.Console
 		{
             //TODO: ReDo this whole class in a better way.
             targetList = new List<Actor>();
+            healthStatusPanel =  new GradientStatusPanel(null, 14, 2,  Color.Red, Color.GreenYellow);
+            energyStatusPanel = new GradientStatusPanel(null, 14, 2, Color.Blue, Color.GreenYellow);
 		}
 
         public void StatusChanged(object sender, EventArgs e)
@@ -58,6 +65,10 @@ namespace NoNameRoguelike.Core.Console
                 MaxHealth = (e as StatsChangedEventArgs).Statistic.MaxHealth;
                 Energy = (e as StatsChangedEventArgs).Statistic.Energy;
                 MaxEnergy = (e as StatsChangedEventArgs).Statistic.MaxEnergy;
+                healthStatusPanel.stat = (e as StatsChangedEventArgs).Statistic.health;
+                energyStatusPanel.stat = (e as StatsChangedEventArgs).Statistic.energy;
+                healthStatusPanel.Update();
+                energyStatusPanel.Update();
             }
         }
 
@@ -174,6 +185,7 @@ namespace NoNameRoguelike.Core.Console
         {
             //TODO: Go Trough and fix this method just copied from older proj.
             this.Clear();
+            /*
             Print(1, 2, _characterName);
             ColoredString healthStatus = _health.ToString().CreateColored(Color.LightGreen, Color.Black, null) +
                                 "/".CreateColored(Color.White, Color.Black, null) +
@@ -193,6 +205,7 @@ namespace NoNameRoguelike.Core.Console
             {
                 DrawEnergy(energyStatus, energy);
             }
+            */
 
             if(targetList.Count > 0)
             {
@@ -205,5 +218,14 @@ namespace NoNameRoguelike.Core.Console
                 }
             }
 	    }
+        public override void Render()
+        {
+            base.Render();
+            if(this.IsVisible == true)
+            {
+                Renderer.Render((ITextSurfaceRendered)healthStatusPanel, this.Position + new Point(1, 1));
+                Renderer.Render((ITextSurfaceRendered)energyStatusPanel, this.Position + new Point(1, 3));
+            }
+        }
     }
 }
