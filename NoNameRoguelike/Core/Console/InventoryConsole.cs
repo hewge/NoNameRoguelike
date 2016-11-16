@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ConsoleScreenGameHelper.EventHandler;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using ConsoleScreenGameHelper.Enum;
@@ -51,7 +52,7 @@ namespace NoNameRoguelike.Core.Console
                                     SadConsole.Consoles.Window.Prompt(GetItemMessage(k), "Eat", "Cancel", (r) => { food_prompt(r, k.Value); });
                                     break;
                                 case ItemType.Equipment:
-                                    SadConsole.Consoles.Window.Prompt(GetItemMessage(k), "Equip/UnEquip", "Cancel", (r) => { food_prompt(r, k.Value); });
+                                    SadConsole.Consoles.Window.Prompt(GetItemMessage(k), "Equip/UnEquip", "Cancel", (r) => { equipment_prompt(r, k.Value); });
                                     break;
                                 case ItemType.Potion:
                                     SadConsole.Consoles.Window.Prompt(GetItemMessage(k), "Drink", "Cancel", (r) => { potion_prompt(r, k.Value); });
@@ -85,10 +86,17 @@ namespace NoNameRoguelike.Core.Console
 
         private void equipment_prompt(bool result, BaseEntity be)
         {
+
             if(result)
             {
                 // DO IT
-
+                if(inventoryUser.GetComponent<Equipment>(ComponentType.Equipment).TryEquip(be.GetComponent<Item>(ComponentType.Item)))
+                {
+                    if(inventoryUser.logger != null)
+                    {
+                        inventoryUser.logger.Write(string.Format("{0}, Equipped.", be.GetComponent<Item>(ComponentType.Item).Name));
+                    }
+                }
             }
             else
             {
@@ -129,6 +137,11 @@ namespace NoNameRoguelike.Core.Console
         {
             ColoredString str = new ColoredString(string.Format("{0}", de.Value.NAME));
             str += ":".CreateColored(Color.White);
+            if(inventoryUser.GetComponent<Equipment>(ComponentType.Equipment).Contains(de.Value.GetComponent<Item>(ComponentType.Item)))
+            {
+                str+="(E)".CreateColored(Color.Crimson);
+                str+=":".CreateColored(Color.White);
+            }
             string s = char.ConvertFromUtf32(de.Value.GetComponent<SpriteAnimation>(ComponentType.SpriteAnimation).Symbol).ToString();
             str += string.Format("{0}", s).CreateColored(
                     de.Value.GetComponent<SpriteAnimation>(ComponentType.SpriteAnimation).Foreground,
@@ -158,9 +171,14 @@ namespace NoNameRoguelike.Core.Console
                     this.VirtualCursor.Right(1);
                     var s = char.ConvertFromUtf32(item.Value.GetComponent<SpriteAnimation>(ComponentType.SpriteAnimation).Symbol);
                     ColoredString str = new ColoredString("");
-                    str += string.Format("{0} : ", item.Key).CreateColored(Color.White);
+                    str += string.Format("{0}:", item.Key).CreateColored(Color.White);
+                    if(inventoryUser.GetComponent<Equipment>(ComponentType.Equipment).Contains(item.Value.GetComponent<Item>(ComponentType.Item)))
+                    {
+                        str+="(E)".CreateColored(Color.Crimson);
+                        str+=":".CreateColored(Color.White);
+                    }
                     str += new ColoredString(s, item.Value.GetComponent<SpriteAnimation>(ComponentType.SpriteAnimation).Foreground, item.Value.GetComponent<SpriteAnimation>(ComponentType.SpriteAnimation).Background);
-                    str += string.Format(" : {0}", item.Value.NAME).CreateColored(Color.White);
+                    str += string.Format(":{0}", item.Value.NAME).CreateColored(Color.White);
 
                     this.VirtualCursor.Print(str).NewLine();
                 }

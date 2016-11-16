@@ -55,6 +55,7 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
 
         public void PickupItem()
         {
+            //From Ground
             Point inventoryUserPosition = GetParent().GetComponent<SpriteAnimation>(ComponentType.SpriteAnimation).Position;
             var a = GetParent().GetComponent<Actor>(ComponentType.Actor);
             if(a != null)
@@ -86,6 +87,7 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
 
         public void DropItem(BaseEntity be)
         {
+            //To Ground
             RemoveItem(be);
             Point inventoryUserPosition = GetParent().GetComponent<SpriteAnimation>(ComponentType.SpriteAnimation).Position;
             be.GetComponent<SpriteAnimation>(ComponentType.SpriteAnimation).IsVisible = true;

@@ -49,6 +49,9 @@ namespace NoNameRoguelike.Core.Screen
             BaseEntity test_eq = new BaseEntity();
             test_eq.NAME = "Test Sword";
             test_eq.AddComponent(new Item(ItemType.Equipment, "A Really Sharp Sword."));
+            test_eq.AddComponent(new Statistic(EquipmentSlot.Hand));
+            test_eq.GetComponent<Statistic>(ComponentType.Stats).Attack = 10;
+            test_eq.AddComponent(new Attack());
             test_eq.AddComponent(new SpriteAnimation('/', Color.Green, Color.Black));
 
             inventoryConsole.Hide();
@@ -65,7 +68,6 @@ namespace NoNameRoguelike.Core.Screen
             dungeonViewConsole.Player.GetComponent<Actor>(ComponentType.Actor).Stats.StatsChanged += characterStatusPanel.StatusChanged;
             dungeonViewConsole.Player.GetComponent<Actor>(ComponentType.Actor).Stats.StatsChanged += characterStatusConsole.StatusChanged;
             dungeonViewConsole.mapLevel.EntityContainer[0].GetComponent<Actor>(ComponentType.Actor).Stats.StatsChanged += characterStatusPanel.actor_StatusChanged;
-            characterStatusPanel.CharacterName = dungeonViewConsole.Player.NAME;
 
 
 		}

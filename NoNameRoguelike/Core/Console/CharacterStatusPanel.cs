@@ -18,36 +18,8 @@ namespace NoNameRoguelike.Core.Console
 	{
         GradientStatusPanel healthStatusPanel;
         GradientStatusPanel energyStatusPanel;
-        private string _characterName;
-        private int _health;
-        private int _maxHealth;
-        private int _energy;
-        private int _maxEnergy;
 
-        private List<Actor> targetList;
-
-        public string CharacterName
-        {
-            set{ _characterName = value; RedrawPanel(); }
-        }
-
-        public int Health
-        {
-            set{ _health = MathHelper.Clamp(value, 0, _maxHealth); RedrawPanel(); }
-        }
-        public int MaxHealth
-        {
-            set{ _maxHealth = value; RedrawPanel(); }
-        }
-
-        public int Energy
-        {
-            set{ _energy = MathHelper.Clamp(value, 0, _maxEnergy); RedrawPanel(); }
-        }
-        public int MaxEnergy
-        {
-            set{ _maxEnergy = value; RedrawPanel(); }
-        }
+        List<Actor> targetList;
 
 		public CharacterStatusPanel(int width, int height) : base("Status", width, height)
 		{
@@ -61,11 +33,7 @@ namespace NoNameRoguelike.Core.Console
         {
             if(e.GetType() == typeof(StatsChangedEventArgs))
             {
-                Health = (e as StatsChangedEventArgs).Statistic.Health;
-                MaxHealth = (e as StatsChangedEventArgs).Statistic.MaxHealth;
-                Energy = (e as StatsChangedEventArgs).Statistic.Energy;
-                MaxEnergy = (e as StatsChangedEventArgs).Statistic.MaxEnergy;
-                healthStatusPanel.stat = (e as StatsChangedEventArgs).Statistic.health;
+                                healthStatusPanel.stat = (e as StatsChangedEventArgs).Statistic.health;
                 energyStatusPanel.stat = (e as StatsChangedEventArgs).Statistic.energy;
                 healthStatusPanel.Update();
                 energyStatusPanel.Update();
@@ -149,64 +117,19 @@ namespace NoNameRoguelike.Core.Console
 
                 //Print(x, y+1, "Health", Color.GreenYellow);
                 var sa = a.GetParent().GetComponent<SpriteAnimation>(ComponentType.SpriteAnimation);
-                var glyphString = string.Format("{0}:", (char)sa.Animation.CurrentFrame[0].GlyphIndex);
+                var glyphString = string.Format("{0}", (char)sa.Animation.CurrentFrame[0].GlyphIndex);
                 Print(x, y, glyphString, sa.Animation.CurrentFrame[0].Foreground, sa.Animation.CurrentFrame[0].Background);
-                Print(x+glyphString.Length, y, a.GetParent().NAME, Color.White, Color.Transparent);
+                Print(x+glyphString.Length, y, ":"+a.GetParent().NAME, Color.White, Color.Transparent);
                 Print(Width - healthStatus.ToString().Length, y+1, healthStatus);
                 Print(x, y+2, health.SubString(0, (int)((double)health.Count*(double)health_percent)));
                 //System.Console.WriteLine("{0}", ((double)health.Count*(double)health_percent));
             }
 
         }
-
-        private void DrawHealth(ColoredString hs, ColoredString h)
-        {
-            double health_percent = (double)_health/(double)_maxHealth;
-
-            Print(1, 4, "Health", Color.GreenYellow);
-            Print(Width - hs.ToString().Length, 4, hs);
-            Print(1, 5, h.SubString(0, (int)((double)h.Count*(double)health_percent)));
-
-            //System.Console.WriteLine("{0}", ((double)health.Count*(double)health_percent));
-        }
-
-        private void DrawEnergy(ColoredString es, ColoredString e)
-        {
-
-            double energy_percent = (double)_energy/(double)_maxEnergy;
-            Print(1, 6, "Energy", Color.GreenYellow);
-            Print(Width - es.ToString().Length, 6, es);
-            Print(1, 7, e.SubString(0, (int)((double)e.Count*(double)energy_percent)));
-
-            //System.Console.WriteLine("{0}", ((double)energy.Count*(double)energy_percent));
-        }
-
         private void RedrawPanel()
         {
             //TODO: Go Trough and fix this method just copied from older proj.
             this.Clear();
-            /*
-            Print(1, 2, _characterName);
-            ColoredString healthStatus = _health.ToString().CreateColored(Color.LightGreen, Color.Black, null) +
-                                "/".CreateColored(Color.White, Color.Black, null) +
-                                _maxHealth.ToString().CreateColored(Color.DarkGreen, Color.Black, null);
-            ColoredString energyStatus = _energy.ToString().CreateColored(Color.LightBlue, Color.Black, null) +
-                                "/".CreateColored(Color.White, Color.Black, null) +
-                                _maxEnergy.ToString().CreateColored(Color.DarkBlue, Color.Black, null);
-
-            ColoredString health = new string((char)176, 14).CreateGradient(Color.Red, Color.GreenYellow, Color.Red, Color.GreenYellow);
-            ColoredString energy = new string((char)176, 14).CreateGradient(Color.Blue, Color.GreenYellow, Color.Blue, Color.GreenYellow);
-
-            if( _health != 0 && _maxHealth != 0 )
-            {
-                DrawHealth(healthStatus, health);
-            }
-            if( _energy != 0 && _maxEnergy != 0 )
-            {
-                DrawEnergy(energyStatus, energy);
-            }
-            */
-
             if(targetList.Count > 0)
             {
                 Print(4, 10, "Targets");

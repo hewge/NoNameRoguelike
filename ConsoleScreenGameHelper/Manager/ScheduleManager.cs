@@ -28,6 +28,16 @@ namespace ConsoleScreenGameHelper.Manager
             (scheduleables[key] as List<IScheduleable>).Add(scheduleable);
         }
 
+        public void Add(IScheduleable scheduleable, int extratime)
+        {
+            int key = time + scheduleable.Time + extratime;
+            if(!scheduleables.ContainsKey(key))
+            {
+                scheduleables.Add(key, new List<IScheduleable>());
+            }
+            (scheduleables[key] as List<IScheduleable>).Add(scheduleable);
+        }
+
         public void Remove(IScheduleable scheduleable)
         {
 

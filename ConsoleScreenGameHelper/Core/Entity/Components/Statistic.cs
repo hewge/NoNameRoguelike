@@ -1,4 +1,5 @@
 ﻿using System;
+using ConsoleScreenGameHelper.Enum;
 using ConsoleScreenGameHelper.Core.DataContainer;
 using Microsoft.Xna.Framework;
 using RogueSharp.DiceNotation;
@@ -35,8 +36,7 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components {
         [JsonProperty]
         public BaseStat speed;
         [JsonProperty]
-        public BaseStat awareness;
-
+        public BaseStat awareness; 
         [JsonProperty]
         public BaseStat attack;
         [JsonProperty]
@@ -71,8 +71,15 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components {
 
         public bool IsInFov { get{ return GetComponent<Actor>(ComponentType.Actor).Map.MapData.FieldOfView.IsInFov(GetComponent<SpriteAnimation>(ComponentType.SpriteAnimation).Position.X, GetComponent<SpriteAnimation>(ComponentType.SpriteAnimation).Position.Y); } set{ StatusChanged(); }}
 
+        public EquipmentSlot EquipmentSlot { get; set; }
+
         [JsonProperty]
         private bool calculated = false;
+
+        public Statistic(EquipmentSlot equipmentSlot) : this(0, 0, 0, 0)
+        {
+            EquipmentSlot = equipmentSlot;
+        }
 
         public Statistic() : this(8, 8, 8, 8)
         {
@@ -125,6 +132,14 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components {
             _energy = diceExpression.Roll().Value;
             _maxEnergy = _energy;
             */
+            if(Strenght == 0)
+            {
+                //This is an item do not calculate.
+                calculated = true;
+                return;
+            }
+            //Not an Equipment
+            EquipmentSlot = EquipmentSlot.None;
 
             for(int i=0; i<Vitality;i++)
             {

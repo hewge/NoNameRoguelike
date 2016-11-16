@@ -62,9 +62,17 @@ namespace ConsoleScreenGameHelper.Core.Entity
                 Player.Update();
                 if(DidPlayerAct == true)
                 {
-                    if(Player.GetComponent<Statistic>(ComponentType.Stats).Energy > 0)
+                    if(Player.GetComponent<Statistic>(ComponentType.Stats).Energy >= 7)
                     {
                         ScheduleManager.Add(Player.GetComponent<Actor>(ComponentType.Actor));
+                    }
+                    else if(Player.GetComponent<Statistic>(ComponentType.Stats).Energy > 0)
+                    {
+                        ScheduleManager.Add(Player.GetComponent<Actor>(ComponentType.Actor), 5);
+                    }
+                    else
+                    {
+                        ScheduleManager.Add(Player.GetComponent<Actor>(ComponentType.Actor), 7);
                     }
                     IsPlayerTurn = false;
                     TickAll();
@@ -97,9 +105,17 @@ namespace ConsoleScreenGameHelper.Core.Entity
                 var ai = (scheduleable as Actor).GetComponent<ConsoleScreenGameHelper.Core.Entity.Components.AI>(ComponentType.AI);
                 ai.Act();
                 (scheduleable as Actor).GetParent().Update();
-                if((scheduleable as Actor).Stats.Energy > 0)
+                if((scheduleable as Actor).Stats.Energy >= 7)
                 {
                     ScheduleManager.Add((scheduleable as Actor));
+                }
+                else if((scheduleable as Actor).Stats.Energy > 0)
+                {
+                    ScheduleManager.Add((scheduleable as Actor), 5);
+                }
+                else
+                {
+                    ScheduleManager.Add((scheduleable as Actor), 7);
                 }
                 NextAct();
             }
@@ -124,9 +140,17 @@ namespace ConsoleScreenGameHelper.Core.Entity
                 var a = be.GetComponent<Actor>(ComponentType.Actor);
                 if( a != null)
                 {
-                    if(a.Stats.Energy != 0)
+                    if(a.Stats.Energy >= 7)
                     {
                         ScheduleManager.Add(a);
+                    }
+                    else if(a.Stats.Energy > 0)
+                    {
+                        ScheduleManager.Add(a, 5);
+                    }
+                    else
+                    {
+                        ScheduleManager.Add(a, 7);
                     }
                 }
 

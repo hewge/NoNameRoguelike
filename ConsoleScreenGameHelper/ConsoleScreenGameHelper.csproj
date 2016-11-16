@@ -135,6 +135,7 @@
     <Compile Include="Core\DataContainer\BaseStat.cs" />
     <Compile Include="Core\Console\Panel\GradientStatusPanel.cs" />
     <Compile Include="Interface\IStatusPanel.cs" />
+    <Compile Include="EventHandler\NewEquipEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
