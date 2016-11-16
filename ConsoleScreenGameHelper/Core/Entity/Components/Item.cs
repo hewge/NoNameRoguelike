@@ -9,6 +9,7 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
         public ItemType ItemType { get; set; }
         public string Description { get; set; }
 
+
 		public Item(ItemType itemType, string description = "An item of mundane means.")
 		{
             ItemType = itemType;

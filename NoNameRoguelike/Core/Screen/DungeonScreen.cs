@@ -50,7 +50,7 @@ namespace NoNameRoguelike.Core.Screen
             test_eq.NAME = "Test Sword";
             test_eq.AddComponent(new Item(ItemType.Equipment, "A Really Sharp Sword."));
             test_eq.AddComponent(new Statistic(EquipmentSlot.Hand));
-            test_eq.GetComponent<Statistic>(ComponentType.Stats).Attack = 10;
+            test_eq.GetComponent<Statistic>(ComponentType.Stats).attack.AddMod("add", 10);
             test_eq.AddComponent(new Attack());
             test_eq.AddComponent(new SpriteAnimation('/', Color.Green, Color.Black));
 

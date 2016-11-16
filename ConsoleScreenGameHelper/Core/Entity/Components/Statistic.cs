@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ConsoleScreenGameHelper.Enum;
 using ConsoleScreenGameHelper.Core.DataContainer;
 using Microsoft.Xna.Framework;
@@ -23,6 +24,8 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components {
 
         private double _hpRegen;
         private double _enRegen;
+
+        public List<BaseStat> stats;
 
         [JsonProperty]
         public BaseStat strenght;
@@ -87,18 +90,29 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components {
         }
         public Statistic(int str, int dex, int vit, int inte)
         {
+            stats = new List<BaseStat>();
             health = new BaseStat("Health", 1,  100);
+            stats.Add(health);
             energy = new BaseStat("Energy", 0, 100);
+            stats.Add(energy);
 
             strenght = new BaseStat("Strenght", 0, 0);
+            stats.Add(strenght);
             dexterity = new BaseStat("Dexterity", 0, 0);
+            stats.Add(dexterity);
             vitality = new BaseStat("Vitality", 0, 0);
+            stats.Add(vitality);
             intelligence = new BaseStat("Intelligence", 0, 0);
+            stats.Add(intelligence);
             speed = new BaseStat("Speed", 0, 0);
+            stats.Add(speed);
 
             awareness = new BaseStat("Awareness", 0, 0);
+            stats.Add(awareness);
             attack = new BaseStat("Attack", 0, 0);
+            stats.Add(attack);
             defence = new BaseStat("Defence", 0, 0);
+            stats.Add(defence);
 
             Strenght = str;
             Dexterity = dex;
@@ -113,25 +127,6 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components {
 
         private void Calculate()
         {
-            //Old calculation with str, int and speed
-            /*
-            DiceExpression diceExpression = new DiceExpression().Constant(_strenght).Dice(3, 2);
-            _attack = diceExpression.Roll().Value;
-            diceExpression = new DiceExpression().Constant(_strenght).Dice(4, _strenght, 1, choose: 3);
-            _health = diceExpression.Roll().Value;
-            _maxHealth = _health;
-            diceExpression = new DiceExpression().Constant(-11).Dice(3, _intelligence, 1, choose: 3);
-            _awareness = Math.Max(diceExpression.Roll().Value, 4);
-            diceExpression = new DiceExpression().Constant(_strenght).Dice(3, 2);
-            _defence = diceExpression.Roll().Value;
-            diceExpression = new DiceExpression().Dice(25+_intelligence, 3, 1, choose: 25);
-            _attackChance = diceExpression.Roll().Value;
-            diceExpression = new DiceExpression().Dice(10+_intelligence, 4, 1, choose: 15);
-            _defenceChance = diceExpression.Roll().Value;
-            diceExpression = new DiceExpression().Constant(_strenght).Dice(5+_intelligence, 6);
-            _energy = diceExpression.Roll().Value;
-            _maxEnergy = _energy;
-            */
             if(Strenght == 0)
             {
                 //This is an item do not calculate.
@@ -223,5 +218,88 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components {
         {
 
         }
+        public void AddModifiers(Statistic stats)
+        {
+            foreach(var bs in stats.stats)
+            {
+                switch(bs.Name)
+                {
+                    case "Strenght":
+                        strenght.AddMod(bs.Modifiers);
+                        break;
+                    case "Dexterity":
+                        dexterity.AddMod(bs.Modifiers);
+                        break;
+                   case "Vitality":
+                        vitality.AddMod(bs.Modifiers);
+                        break;
+                   case "Intelligence":
+                        intelligence.AddMod(bs.Modifiers);
+                        break;
+                   case "Speed":
+                        speed.AddMod(bs.Modifiers);
+                        break;
+                   case "Awareness":
+                        awareness.AddMod(bs.Modifiers);
+                        break;
+                   case "Health":
+                        health.AddMod(bs.Modifiers);
+                        break;
+                   case "Energy":
+                        energy.AddMod(bs.Modifiers);
+                        break;
+                   case "Attack":
+                        attack.AddMod(bs.Modifiers);
+                        break;
+                   case "Defence":
+                        defence.AddMod(bs.Modifiers);
+                        break;
+
+                }
+            }
+            StatusChanged();
+        }
+        public void RemoveModifiers(Statistic stats)
+        {
+            foreach(var bs in stats.stats)
+            {
+                switch(bs.Name)
+                {
+                    case "Strenght":
+                        strenght.RemoveMod(bs.Modifiers);
+                        break;
+                    case "Dexterity":
+                        dexterity.RemoveMod(bs.Modifiers);
+                        break;
+                   case "Vitality":
+                        vitality.RemoveMod(bs.Modifiers);
+                        break;
+                   case "Intelligence":
+                        intelligence.RemoveMod(bs.Modifiers);
+                        break;
+                   case "Speed":
+                        speed.RemoveMod(bs.Modifiers);
+                        break;
+                   case "Awareness":
+                        awareness.RemoveMod(bs.Modifiers);
+                        break;
+                   case "Health":
+                        health.RemoveMod(bs.Modifiers);
+                        break;
+                   case "Energy":
+                        energy.RemoveMod(bs.Modifiers);
+                        break;
+                   case "Attack":
+                        attack.RemoveMod(bs.Modifiers);
+                        break;
+                   case "Defence":
+                        defence.RemoveMod(bs.Modifiers);
+                        break;
+
+                }
+            }
+            StatusChanged();
+        }
+
     }
 }

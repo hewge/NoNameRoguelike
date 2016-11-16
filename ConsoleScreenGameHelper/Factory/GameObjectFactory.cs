@@ -11,6 +11,7 @@ namespace ConsoleScreenGameHelper.Factory
 	{
         public static void LoadBluePrints()
         {
+            /*
             using(StreamReader r = new StreamReader("World/Entity/Blueprint/test.json"))
             {
                 string json = r.ReadToEnd();
@@ -21,6 +22,7 @@ namespace ConsoleScreenGameHelper.Factory
                         });
                 System.Console.WriteLine(string.Format("obj.ToString():{0}", obj.ToString()));
             }
+            */
             using(StreamWriter w = new StreamWriter("World/Entity/Blueprint/test.json"))
             {
                 var testMob = new BaseEntity();

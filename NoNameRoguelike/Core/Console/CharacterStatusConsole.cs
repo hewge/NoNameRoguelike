@@ -93,6 +93,13 @@ namespace NoNameRoguelike.Core.Console
 
         public override void Render()
         {
+            for(int x=1;x<Width-1;x++)
+            {
+                for(int y=1; y<Height-1;y++)
+                {
+                    this.Clear(x, y);
+                }
+            }
             base.Render();
             if(this.IsVisible == true)
             {

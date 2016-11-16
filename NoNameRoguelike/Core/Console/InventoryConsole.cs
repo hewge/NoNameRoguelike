@@ -94,7 +94,7 @@ namespace NoNameRoguelike.Core.Console
                 {
                     if(inventoryUser.logger != null)
                     {
-                        inventoryUser.logger.Write(string.Format("{0}, Equipped.", be.GetComponent<Item>(ComponentType.Item).Name));
+                        inventoryUser.logger.Write(string.Format("{0}, Equipped.", be.NAME));
                     }
                 }
             }

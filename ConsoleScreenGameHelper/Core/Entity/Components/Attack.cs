@@ -49,6 +49,7 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
                 var hitPercent = ResolveAttack();
                 var dmg = AttackValue * hitPercent;
 
+                System.Console.WriteLine(AttackValue);
                 System.Console.WriteLine("Damage:{0}", (int)dmg);
                 (e as NewAttackEventArgs).Damage = (int)dmg;
 

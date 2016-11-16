@@ -20,9 +20,13 @@ namespace ConsoleScreenGameHelper.Core.Console.Panel
         public void Update()
         {
             editor.Print(0, 0, stat.Name);
+            editor.Clear(14, 0);
+            editor.Clear(15, 0);
             editor.Print(14, 0, stat.Value.ToString());
             if(stat.AltValue != 0)
             {
+                editor.Clear(17, 0);
+                editor.Clear(18, 0);
                 editor.Print(17, 0, stat.AltValue.ToString());
             }
         }

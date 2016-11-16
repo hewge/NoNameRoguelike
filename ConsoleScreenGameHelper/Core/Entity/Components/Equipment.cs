@@ -1,4 +1,5 @@
 ﻿using System;
+using ConsoleScreenGameHelper.Core.DataContainer;
 using ConsoleScreenGameHelper.Enum;
 using ConsoleScreenGameHelper.Interface;
 
@@ -37,35 +38,65 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
                     if(Body == null)
                     {
                         Body = item;
+                        GetComponent<Statistic>(ComponentType.Stats).AddModifiers(item.GetComponent<Statistic>(ComponentType.Stats));
                         return true;
+                    }
+                    else if(Body == item)
+                    {
+                        GetComponent<Statistic>(ComponentType.Stats).RemoveModifiers(item.GetComponent<Statistic>(ComponentType.Stats));
+                        Body = null;
                     }
                     break;
                 case EquipmentSlot.Feet:
                     if(Feet == null)
                     {
                         Feet = item;
+                        GetComponent<Statistic>(ComponentType.Stats).AddModifiers(item.GetComponent<Statistic>(ComponentType.Stats));
                         return true;
                     }
-                    break;
+                     else if(Feet == item)
+                    {
+                        GetComponent<Statistic>(ComponentType.Stats).RemoveModifiers(item.GetComponent<Statistic>(ComponentType.Stats));
+                        Feet = null;
+                    }
+                   break;
                   case EquipmentSlot.Hand:
                     if(Hand == null)
                     {
                         Hand = item;
+                        GetComponent<Statistic>(ComponentType.Stats).AddModifiers(item.GetComponent<Statistic>(ComponentType.Stats));
                         return true;
+                    }
+                    else if(Hand == item)
+                    {
+                        GetComponent<Statistic>(ComponentType.Stats).RemoveModifiers(item.GetComponent<Statistic>(ComponentType.Stats));
+                        Hand = null;
                     }
                     break;
                case EquipmentSlot.Head:
                     if(Head == null)
                     {
                         Head = item;
+                        GetComponent<Statistic>(ComponentType.Stats).AddModifiers(item.GetComponent<Statistic>(ComponentType.Stats));
                         return true;
+                    }
+                    else if(Head == item)
+                    {
+                       GetComponent<Statistic>(ComponentType.Stats).RemoveModifiers(item.GetComponent<Statistic>(ComponentType.Stats));
+                       Head = null;
                     }
                     break;
                case EquipmentSlot.Legs:
                     if(Legs == null)
                     {
                         Legs = item;
+                        GetComponent<Statistic>(ComponentType.Stats).AddModifiers(item.GetComponent<Statistic>(ComponentType.Stats));
                         return true;
+                    }
+                    else if(Legs == item)
+                    {
+                        GetComponent<Statistic>(ComponentType.Stats).RemoveModifiers(item.GetComponent<Statistic>(ComponentType.Stats));
+                        Legs = null;
                     }
                     break;
             }
