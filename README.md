@@ -2,7 +2,7 @@ NoNameRoguelike
 ===============
 
 ###Demo
-![Demo](https://github.com/hewge/NoNameRoguelike/master/out.gif)
+![Demo](https://github.com/hewge/NoNameRoguelike/blob/master/out.gif)
 
 ----------------------------------------------------------
 This is a roguelike im writing as my first larger project.
