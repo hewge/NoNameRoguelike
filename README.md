@@ -1,6 +1,10 @@
 NoNameRoguelike
 ===============
 
+###Demo
+![Demo](https://github.com/hewge/NoNameRoguelike/master/out.gif)
+
+----------------------------------------------------------
 This is a roguelike im writing as my first larger project.
 i am writing this to show off as my portfolio.
 
