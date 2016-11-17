@@ -166,6 +166,11 @@ namespace ConsoleScreenGameHelper.Core.Entity.Components
             {
                 GetComponent<Statistic>(ComponentType.Stats).Energy -= 1;
             }
+            if(amount.X != 0 && amount.Y != 0)
+            {
+                //Twice the energy required for moving along both axis at the same time.
+                GetComponent<Statistic>(ComponentType.Stats).Energy -= 1;
+            }
             Point newPos = this.Position + amount;
             //System.Console.WriteLine(string.Format("Try Move to X:{0}, Y:{1}", newPos.X, newPos.Y));
             var a = GetComponent<Actor>(ComponentType.Actor);
